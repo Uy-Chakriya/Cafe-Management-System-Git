@@ -1,4 +1,4 @@
-# ☕️ Cafe Management System  
+# ☕️ Cafe Management System (Plz check my main branch)
 
 ## 📖 Overview  
 The **Cafe Management System** is a desktop application built with **JavaFX** and **Maven**, designed to help cafes streamline daily operations. It offers modules for authentication, customer management, menu handling, and order processing, along with an administrative dashboard for central control.  

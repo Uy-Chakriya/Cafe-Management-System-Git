@@ -1,18 +1,23 @@
 package com.example.cafemanagementsystemgit;
 
-import javafx.application.Application;
+import com.sun.tools.javac.Main;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class CafeApp extends Application {
+import static javafx.application.Application.launch;
+
+public class CafeApp extends HelloController {
+
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(CafeApp.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        stage.setTitle("Hello!");
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/com/cafe/views/login.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        scene.getStylesheets().add(Main.class.getResource("/com/cafe/styles/style.css").toExternalForm());
+
+        stage.setTitle("Cafe Management System - Admin");
         stage.setScene(scene);
         stage.show();
     }

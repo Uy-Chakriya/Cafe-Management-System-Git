@@ -1,14 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.cafemanagementsystemgit.views.Order"
-            prefHeight="400.0" prefWidth="600.0">
+            fx:controller="com.cafe.controllers.OrderController"
+            prefHeight="720.0" prefWidth="1280.0"
+            style="-fx-background-color: #f5f5f5;">
 
+    <VBox prefWidth="200" style="-fx-background-color: #ffffff;">
+        <Label text="Admin" style="-fx-font-weight: bold;"/>
+        <Label text="admin@gmail.com"/>
+    </VBox>
+
+    <HBox layoutX="200" spacing="20" AnchorPane.leftAnchor="220" AnchorPane.topAnchor="20" AnchorPane.rightAnchor="20" AnchorPane.bottomAnchor="20">
+        <VBox HBox.hgrow="ALWAYS">
+            <Label text="Menu" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+            <TilePane hgap="15" vgap="15">
+                <VBox alignment="CENTER" style="-fx-border-color: #ddd; -fx-border-radius: 5; -fx-padding: 10;">
+                    <ImageView fitWidth="150" fitHeight="150">
+                        <image>
+                            <Image url="@../images/matcha.png"/>
+                        </image>
+                    </ImageView>
+                    <Label text="Matcha" style="-fx-font-weight: bold;"/>
+                    <Label text="$2.28"/>
+                    <HBox alignment="CENTER" spacing="5">
+                        <Spinner min="0" max="10" initialValue="0"/>
+                        <Button text="Add"/>
+                    </HBox>
+                </VBox>
+            </TilePane>
+        </VBox>
+
+        <VBox prefWidth="400" spacing="10" style="-fx-background-color: #ffffff; -fx-padding: 20;">
+            <TableView fx:id="orderTableView" prefHeight="300" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="itemColumn" text="Column 1" prefWidth="200"/>
+                    <TableColumn fx:id="priceColumn" text="Column 2" prefWidth="190"/>
+                </columns>
+            </TableView>
+            <HBox alignment="CENTER_RIGHT" spacing="10">
+                <Label text="Subtotal:"/>
+                <Label fx:id="subtotalLabel" text="$0.00"/>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" spacing="10">
+                <Label text="Total:"/>
+                <Label fx:id="totalLabel" text="$0.00"/>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" spacing="10">
+                <Label text="Change:"/>
+                <Label fx:id="changeLabel" text="$0.00"/>
+            </HBox>
+            <TextField fx:id="amountPaidField" promptText="Enter amount paid"/>
+            <HBox spacing="10">
+                <Button text="Pay" onAction="#onPay" prefWidth="100"/>
+                <Button text="Remove" onAction="#onRemoveItem" prefWidth="100"/>
+                <Button text="Receipt" onAction="#onGenerateReceipt" prefWidth="100"/>
+            </HBox>
+        </VBox>
+    </HBox>
 </AnchorPane>

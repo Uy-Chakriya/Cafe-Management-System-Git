@@ -1,24 +1,24 @@
 .gradient {
-    -fx-background-color: linear-gradient(to bottom right, #0f6789, #286155);
+    -fx-background-color: linear-gradient(to bottom right, #AA705B, #714024);
 }
 
 .white-form {
-    -fx-background-color: #ffffff;
+    -fx-background-color: #ECDDD7;
 }
 
 .gradient Label {
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: #ECDDD7;
 }
 
 .header-label {
-    -fx-border-color: #286155;
+    -fx-border-color: #714024;
     -fx-border-width: 0 0 0 5px;
     -fx-padding: 0 0 0 5px;
-    -fx-text-fill: #286155;
+    -fx-text-fill: #714024;
 }
 
 .login-btn {
-    -fx-background-color: linear-gradient(to bottom right, #098c53, #246861);
+    -fx-background-color: linear-gradient(to bottom right, #AA705B, #714024);
     -fx-text-fill: #ffffff;
     -fx-font-size: 16;
     -fx-background-radius: 5px;
@@ -26,18 +26,18 @@
 }
 
 .login-btn:hover {
-    -fx-background-color: linear-gradient(to bottom right, #0fb565, #399a8f);
+    -fx-background-color: linear-gradient(to bottom right, #AA705B, #714024);
 }
 
 .textfield {
     -fx-background-color: transparent;
-    -fx-border-color: linear-gradient(to bottom right, #0f6789, #286155);
+    -fx-border-color: linear-gradient(to bottom right, #AA705B, #714024);
     -fx-border-width: 0.3px;
 }
 
 .textfield:focused {
     -fx-border-width: 1px;
-    -fx-border-color: #399a8f;
+    -fx-border-color: #714024;
 }
 
 .createAccountButton {

@@ -1,5 +1,5 @@
 .card {
-    -fx-background-color: #ffffff;
+    -fx-background-color: #ECDDD7;
     -fx-background-radius: 5px;
 }
 
@@ -8,11 +8,11 @@
 }
 
 .btn {
-    -fx-background-color: linear-gradient(to bottom right, #098c53, #246861);
+    -fx-background-color: linear-gradient(to bottom right, #AA705B, #714024);
     -fx-text-fill: #ffffff;
 }
 
 .btn:hover {
-    -fx-background-color: linear-gradient(to bottom right, #0fb565, #399a8f);
+    -fx-background-color: linear-gradient(to bottom right, #AA705B, #714024);
     -fx-cursor: hand;
 }

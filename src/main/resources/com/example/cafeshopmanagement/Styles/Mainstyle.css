@@ -1,50 +1,50 @@
 .header {
-    -fx-background-color: linear-gradient(to bottom right, #098c53, #246861);
+    -fx-background-color: linear-gradient(to bottom right, #AA705B, #714024);
     -fx-alignment: center;
-    -fx-border-color: #ffffff;
+    -fx-border-color: #ECDDD7;
     -fx-border-width: 0 0 1px 0;
 }
 
 .header Label {
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: #ECDDD7;
 }
 
 .nav-form {
-    -fx-background-color: linear-gradient(to bottom right, #0f6789, #286155);
+    -fx-background-color: linear-gradient(to bottom right, #AA705B, #714024);
 }
 
 .nav-form Label {
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: #ECDDD7;
 }
 
 .nav-btn {
     -fx-background-color: transparent;
-    -fx-border-color: #ffffff;
+    -fx-border-color: #ECDDD7;
     -fx-border-width: 0.5;
-    -fx-text-fill: #fff;
+    -fx-text-fill: #ECDDD7;
     -fx-font-size: 14px;
 }
 
 .nav-btn:hover {
     -fx-cursor: hand;
-    -fx-background-color: #ffffff;
-    -fx-text-fill: #000000;
+    -fx-background-color: #ECDDD7;
+    -fx-text-fill: #714024;
 }
 
 .log-out {
-    -fx-background-color: #106abf;
+    -fx-background-color: #714024;
     -fx-padding: 5px;
     -fx-cursor: hand;
     -fx-background-radius: 50px;
 }
 
 .log-out:hover {
-    -fx-background-color: #a71931;
+    -fx-background-color: #AA705B;
     -fx-cursor: hand;
 }
 
 .log-out FontAwesomeIconView {
-    -fx-fill: #ffffff;
+    -fx-fill: #ECDDD7;
 }
 
 .shadow {
@@ -52,7 +52,7 @@
 }
 
 .white-background {
-    -fx-background-color: #ffffff;
+    -fx-background-color: #ECDDD7;
 }
 
 .radius {
@@ -66,13 +66,13 @@
 .table-view {
     -fx-background-color: transparent;
     -fx-padding: 0;
-    -fx-border-color: linear-gradient(to bottom right, #0f6789, #286155);
+    -fx-border-color: linear-gradient(to bottom right, #AA705B, #714024);
     -fx-background-radius: 5px;
     -fx-border-width: 1.5px;
 }
 
 .table-view .column-header-background {
-    -fx-background-color: linear-gradient(to bottom right, #0f6789, #286155);
+    -fx-background-color: linear-gradient(to bottom right, #AA705B, #714024);
     -fx-background-insets: 0 0 0 0;
     -fx-background-radius: 5px 5px 0 0;
 }
@@ -83,17 +83,16 @@
 }
 
 .table-view .column-header .label {
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: #ECDDD7;
 }
 
 .btn {
-    -fx-background-color: linear-gradient(to bottom right, #098c53, #246861);
-    -fx-text-fill: #ffffff;
+    -fx-background-color: linear-gradient(to bottom right, #AA705B, #714024);
+    -fx-text-fill: #ECDDD7;
     -fx-font-size: 14px;
 }
 
 .btn:hover {
-    -fx-background-color: linear-gradient(to bottom right, #0f6789, #286155);
+    -fx-background-color: linear-gradient(to bottom right, #AA705B, #714024);
     -fx-cursor: hand;
-
 }

@@ -10,4 +10,5 @@ module com.example.cafeshopmanagement {
     exports com.example.cafeshopmanagement.Controller;
     exports com.example.cafeshopmanagement.Database;
     exports com.example.cafeshopmanagement.Model;
+    opens com.example.cafeshopmanagement.Model to javafx.base;
 }

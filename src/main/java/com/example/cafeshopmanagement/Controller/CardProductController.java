@@ -1,5 +1,4 @@
 package com.example.cafeshopmanagement.Controller;
-
 import com.example.cafeshopmanagement.Database.Database;
 import com.example.cafeshopmanagement.Model.ProductData;
 import com.example.cafeshopmanagement.Model.UserDetail;
@@ -7,7 +6,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -52,6 +50,7 @@ public class CardProductController implements Initializable {
     }
 
     private double total;
+
     private double pr;
 
     public void addBtn() {

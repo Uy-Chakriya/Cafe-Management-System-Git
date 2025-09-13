@@ -1,3 +1,10 @@
+.header-label {
+    -fx-border-color: #714024;
+    -fx-border-width: 0 0 0 5px;
+    -fx-padding: 0 0 0 5px;
+    -fx-text-fill: #714024;
+}
+
 .header {
     -fx-background-color: linear-gradient(to bottom right, #AA705B, #714024);
     -fx-alignment: center;

@@ -4,6 +4,7 @@ import com.example.cafeshopmanagement.App;
 import com.example.cafeshopmanagement.Database.Database;
 import com.example.cafeshopmanagement.Model.CustomerModel;
 import com.example.cafeshopmanagement.Model.ProductData;
+import com.example.cafeshopmanagement.Model.Receipt;
 import com.example.cafeshopmanagement.Model.UserDetail;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -75,6 +77,12 @@ public class MainController implements Initializable {
     public Button menu_remove_btn;
     public Button menu_receipt_btn;
     public AnchorPane dashboard_section;
+    public AnchorPane customers_section;
+    public TableView<Receipt> customer_tableview;
+    public TableColumn<Receipt, String> customer_id_col;
+    public TableColumn<Receipt, Double> customer_total_col;
+    public TableColumn<Receipt, String> customer_date_col;
+    public TableColumn<Receipt, String> customer_cashier_col;
 
     private Alert alert;
 
@@ -90,11 +98,14 @@ public class MainController implements Initializable {
             "Unavailable"
     };
 
+
+    //==>> connect to data base
+
     private Connection connection;
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;
     private final ObservableList<ProductData> cardListData = FXCollections.observableArrayList();
-//    private final ObservableList<CustomerModel> tableListData = FXCollections.observableArrayList();
+
     LoginController loginController = new LoginController();
 
     public ObservableList<ProductData> menuGetData() {
@@ -163,6 +174,10 @@ public class MainController implements Initializable {
     private int customerID;
 
     private ObservableList<CustomerModel> menuListData;
+
+
+    // ===>>  calculate all the price [== Menu ==]
+
     public void menuShowData(){
         menuListData = menuDisplayOrder();
         menu_product_name.setCellValueFactory(new PropertyValueFactory<>("product_name"));
@@ -211,7 +226,7 @@ public class MainController implements Initializable {
             alert.showAndWait();
         } else{
             amount = Double.parseDouble(menu_amount_textfield.getText());
- tPrice= Double.parseDouble(totalPrice);
+            tPrice= Double.parseDouble(totalPrice);
 
             if (amount < tPrice) {
                 menu_amount_textfield.setText("");
@@ -220,6 +235,31 @@ public class MainController implements Initializable {
                 change = (amount - tPrice);
                 menu_change.setText("$" + change);
             }
+        }
+    }
+
+    public void menuReceiptBtn() {
+        if (tPrice > 0) {
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("FXML/Receipt.fxml"));
+            try {
+                Parent root = fxmlLoader.load();
+                ReceiptController receiptController = fxmlLoader.getController();
+                receiptController.setReceiptData(customerID, tPrice);
+
+                Stage stage = new Stage();
+                Scene scene = new Scene(root);
+                stage.setTitle("Receipt");
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Message");
+            alert.setHeaderText(null);
+            alert.setContentText("Cannot generate receipt without an order.");
+            alert.showAndWait();
         }
     }
 
@@ -264,6 +304,8 @@ public class MainController implements Initializable {
                     alert.setContentText("Successful.");
                     alert.showAndWait();
 
+                    menuReceiptBtn();
+
                     menuShowData();
                     menuRestart();
                 }else {
@@ -303,9 +345,9 @@ public class MainController implements Initializable {
 
             while(resultSet.next()) {
                 customerModel = new CustomerModel(
-                       resultSet.getInt("id"),
-                       resultSet.getString("customer_id"),
-                       resultSet.getString("product_id"),
+                        resultSet.getInt("id"),
+                        resultSet.getString("customer_id"),
+                        resultSet.getString("product_id"),
                         resultSet.getString("product_name"),
                         resultSet.getString("quantity"),
                         resultSet.getString("price"),
@@ -548,9 +590,7 @@ public class MainController implements Initializable {
             throw new RuntimeException(e);
         }
         return listData;
-    }
-
-    ;
+    };
 
     private ObservableList<ProductData> inventoryListData;
 
@@ -648,26 +688,64 @@ public class MainController implements Initializable {
             dashboard_section.setVisible(true);
             inventory_form.setVisible(false);
             menu_section.setVisible(false);
+            customers_section.setVisible(false);
         } else if (event.getSource() == inventory_button) {
             dashboard_section.setVisible(false);
             inventory_form.setVisible(true);
             menu_section.setVisible(false);
-
+            customers_section.setVisible(false);
             inventoryShowData();
-
         } else if (event.getSource() == menu_button) {
             dashboard_section.setVisible(false);
             inventory_form.setVisible(false);
             menu_section.setVisible(true);
+            customers_section.setVisible(false);
             menuDisplayCard();
             menuDisplayOrder();
             menuDisplayTotal();
             menuShowData();
-
+        } else if (event.getSource() == customers_button) {
+            dashboard_section.setVisible(false);
+            inventory_form.setVisible(false);
+            menu_section.setVisible(false);
+            customers_section.setVisible(true);
+            showCustomerData();
         }
-
-
     }
+
+    public ObservableList<Receipt> getReceiptData() {
+        ObservableList<Receipt> listData = FXCollections.observableArrayList();
+        String sql = "SELECT * FROM Receipt";
+        connection = Database.connectionDB();
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            resultSet = preparedStatement.executeQuery();
+            Receipt receipt;
+            while (resultSet.next()) {
+                receipt = new Receipt(
+                        resultSet.getInt("id"),
+                        resultSet.getString("customer_id"),
+                        resultSet.getDouble("total"),
+                        resultSet.getString("date"),
+                        resultSet.getString("em_username")
+                );
+                listData.add(receipt);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return listData;
+    }
+
+    public void showCustomerData() {
+        ObservableList<Receipt> receiptList = getReceiptData();
+        customer_id_col.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        customer_total_col.setCellValueFactory(new PropertyValueFactory<>("total"));
+        customer_date_col.setCellValueFactory(new PropertyValueFactory<>("date"));
+        customer_cashier_col.setCellValueFactory(new PropertyValueFactory<>("em_username"));
+        customer_tableview.setItems(receiptList);
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         getUsername();
@@ -684,6 +762,8 @@ public class MainController implements Initializable {
         menuDisplayOrder();
         menuDisplayTotal();
         menuShowData();
+        showCustomerData();
+        menu_receipt_btn.setOnAction(event -> menuReceiptBtn());
     }
 
 

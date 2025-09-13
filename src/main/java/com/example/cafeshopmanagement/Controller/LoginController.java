@@ -56,9 +56,8 @@ public class LoginController implements Initializable {
     private PreparedStatement preparedStatement = null;
     private ResultSet resultSet;
     private final String[] questionList = {
-            "What is your favorite Color?",
-            "What is your favorite food?",
-            "What is your date of birth?",
+            "How many sibling in your country?",
+            "Name your cat?",
     };
 
     ObservableList<String> observableList = FXCollections.observableArrayList(questionList);

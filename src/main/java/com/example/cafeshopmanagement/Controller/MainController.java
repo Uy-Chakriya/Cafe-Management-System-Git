@@ -288,6 +288,7 @@ public class MainController implements Initializable {
         menu_change.setText("$0.0");
 
     }
+
     public ObservableList<CustomerModel> menuDisplayOrder() {
         getCustomerID();
         ObservableList<CustomerModel> listData = FXCollections.observableArrayList();
@@ -319,6 +320,7 @@ public class MainController implements Initializable {
         }
         return listData;
     }
+
     public void getCustomerID(){
         String sql ="SELECT MAX(customer_id) FROM Customer";
         connection = Database.connectionDB();
@@ -351,6 +353,7 @@ public class MainController implements Initializable {
             throw new RuntimeException(e);
         }
     }
+
     public void inventoryAddBtn() {
         if (product_id_textfield.getText().isEmpty()
                 || product_name_textfield.getText().isEmpty()

@@ -37,12 +37,12 @@ Employees can:
 - **Programming Language:** Java 17  
 - **Framework:** JavaFX 17.0.6  
 - **Build Tool:** Apache Maven 3.11.0  
-- **Database:** SQLite  
-- **Database Driver:** `org.xerial:sqlite-jdbc`  
+- **Database:** PostgreSQL  
+- **Database Driver:** `org.postgresql:postgresql`  
 
 ---
 
-## 🗂️ Database Schema
+## 🗂️ Database Schema (PostgreSQL)
 
 ### **Employee**  
 Stores user credentials and security questions.  

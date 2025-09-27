@@ -24,13 +24,10 @@ public class CardProductController implements Initializable {
     private Image image;
     private int quantity;
     private String productID;
-
     private Connection connection;
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;
     private Alert alert;
-
-
     private String type;
     private String prod_date;
     private String prod_image;

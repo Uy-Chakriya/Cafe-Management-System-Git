@@ -170,13 +170,10 @@ public class MainController implements Initializable {
             }
         }
     }
-
     private int customerID;
-
     private ObservableList<CustomerModel> menuListData;
 
-
-    // ===>>  calculate all the price [== Menu ==]
+    // ===>> Calculate
 
     public void menuShowData(){
         menuListData = menuDisplayOrder();
@@ -765,6 +762,4 @@ public class MainController implements Initializable {
         showCustomerData();
         menu_receipt_btn.setOnAction(event -> menuReceiptBtn());
     }
-
-
 }

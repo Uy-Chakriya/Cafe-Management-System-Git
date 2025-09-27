@@ -1,5 +1,4 @@
 package com.example.cafeshopmanagement.Controller;
-
 import com.example.cafeshopmanagement.Database.Database;
 import com.example.cafeshopmanagement.Model.CustomerModel;
 import javafx.collections.FXCollections;
@@ -16,7 +15,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-
 public class ReceiptController implements Initializable {
     public Label receipt_customer_id;
     public TableView<CustomerModel> receipt_tableview;

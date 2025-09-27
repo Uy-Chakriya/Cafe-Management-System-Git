@@ -5,9 +5,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Database {
-        private static final String URL = "jdbc:sqlite:cafeShopManagement.db?journal_mode=WAL";
-        private static final String USER = "root";
-        private static final String PASSWORD = "";
+    private static final String URL = "jdbc:sqlite:cafeShopManagement.db?journal_mode=WAL";
+//        private static final String URL = "jdbc:postgresql:///Cafe_Management_System";
+        private static final String USER = "postgres";
+        private static final String PASSWORD = "Uyya555$";
         public static Connection connectionDB(){
             try{
                Class.forName("org.sqlite.JDBC");

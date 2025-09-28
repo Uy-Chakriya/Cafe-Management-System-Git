@@ -5,16 +5,18 @@ public class CustomerModel {
     private String customer_id;
     private String product_id;
     private String product_name;
-    private String quantity;
-    private String price;
+    private String product_type;
+    private Integer quantity;
+    private Double price;
     private String date;
     private String em_username;
 
-    public CustomerModel(Integer id, String customerId, String productId, String productName, String quantity, String price, String date, String emUsername) {
+    public CustomerModel(Integer id, String customerId, String productId, String productName, String product_type, Integer quantity, Double price, String date, String emUsername) {
         this.id = id;
         customer_id = customerId;
         product_id = productId;
         product_name = productName;
+        this.product_type = product_type;
         this.quantity = quantity;
         this.price = price;
         this.date = date;
@@ -37,11 +39,15 @@ public class CustomerModel {
         return product_name;
     }
 
-    public String getQuantity() {
+    public String getProduct_type() {
+        return product_type;
+    }
+
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public String getPrice() {
+    public Double getPrice() {
         return price;
     }
 

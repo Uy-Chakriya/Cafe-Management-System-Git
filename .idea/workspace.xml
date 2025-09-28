@@ -5,15 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5ddef2a2-bac1-4dcc-b873-5ed0ecde15d8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cafeShopManagement.db-shm" beforeDir="false" afterPath="$PROJECT_DIR$/cafeShopManagement.db-shm" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Controller/CardProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Controller/CardProductController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Controller/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Controller/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Controller/ReceiptController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Controller/ReceiptController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Database/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Database/Database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/cafeshopmanagement/Styles/CardProductStyle.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/cafeshopmanagement/Styles/LoginStyle.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Model/CustomerModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Model/CustomerModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/cafeshopmanagement/FXML/Reciept.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/cafeshopmanagement/FXML/Reciept.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,13 +73,16 @@
     &quot;git-widget-placeholder&quot;: &quot;latest-version&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/UNIVERSITY/NUM/Year 2/Semister 2/Subject 4 ( JavaFx - Krou Chet)/Still Process/cafe-management-system/Cafe-Management-System-Git&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/UNIVERSITY/NUM/Year 2/Semister 2/Subject 4 ( JavaFx - Krou Chet)/cafe-management-system/Cafe-Management-System-Git&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;SQL Dialects&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
@@ -166,6 +170,8 @@
       <workItem from="1759011681683" duration="119000" />
       <workItem from="1759011921028" duration="94000" />
       <workItem from="1759012024872" duration="23000" />
+      <workItem from="1759012117481" duration="7149000" />
+      <workItem from="1759021798730" duration="611000" />
     </task>
     <servers />
   </component>
@@ -175,14 +181,24 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Controller/MainController.java</url>
+          <line>373</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Controller/MainController.java</url>
+          <line>457</line>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Controller/MainController.java</url>
-          <line>189</line>
-          <properties class="com.example.cafeshopmanagement.Controller.MainController" method="menuGetTotal">
+          <line>456</line>
+          <properties class="com.example.cafeshopmanagement.Controller.MainController" method="inventoryDeleteBtn">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
-          <option name="timeStamp" value="4" />
+          <option name="timeStamp" value="15" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -108,9 +108,9 @@ public class CardProductController implements Initializable {
                     preparedStatement.setString(1, String.valueOf(UserDetail.getCustomerID()));
                     preparedStatement.setString(2, productID);
                     preparedStatement.setString(3, card_product_name.getText());
-                    preparedStatement.setString(4, card_spinner.getValue().toString());
+                    preparedStatement.setInt(4, card_spinner.getValue());
                     total = (quantity * pr);
-                    preparedStatement.setString(5, String.valueOf(total));
+                    preparedStatement.setDouble(5, total);
                     preparedStatement.setString(6, String.valueOf(sqlDate));
                     preparedStatement.setString(7, UserDetail.getUsername());
 
@@ -124,8 +124,8 @@ public class CardProductController implements Initializable {
                     preparedStatement = connection.prepareStatement(updateStock);
                     preparedStatement.setString(1, card_product_name.getText());
                     preparedStatement.setString(2, type);
-                    preparedStatement.setString(3, String.valueOf(upStock));
-                    preparedStatement.setString(4, String.valueOf(pr));
+                    preparedStatement.setInt(3, upStock);
+                    preparedStatement.setDouble(4, pr);
                     preparedStatement.setString(5, check);
                     preparedStatement.setString(6, prod_image);
                     preparedStatement.setString(7, String.valueOf(sqlDate));

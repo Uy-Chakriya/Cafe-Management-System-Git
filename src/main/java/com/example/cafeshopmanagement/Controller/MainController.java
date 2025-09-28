@@ -185,21 +185,18 @@ public class MainController implements Initializable {
 
     private String totalPrice = "";
     public void menuGetTotal(){
-
-        String total = "SELECT SUM(price) FROM Customer WHERE em_username = ?";
+        String total = "SELECT SUM(price) AS total_price FROM Customer WHERE em_username = ?";
         connection = Database.connectionDB();
         String user = UserDetail.getUsername();
-
         try{
             preparedStatement = connection.prepareStatement(total);
             preparedStatement.setString(1, user);
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                totalPrice = resultSet.getString("SUM(price)");
+                totalPrice = resultSet.getString("total_price");
 
             }
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -261,6 +258,9 @@ public class MainController implements Initializable {
     }
 
     public void menuPayBtn() {
+        // This method now runs to ensure tPrice is updated.
+        menuAmount();
+
         if (tPrice ==0) {
             alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error Message");
@@ -269,6 +269,7 @@ public class MainController implements Initializable {
             alert.showAndWait();
         } else {
             String insertPay = "INSERT INTO Receipt (customer_id, total, date, em_username) VALUES(?,?,?,?)";
+            String clearCustomer = "DELETE FROM Customer WHERE customer_id = ?";
             connection = Database.connectionDB();
             try{
                 if (amount ==0) {
@@ -289,10 +290,18 @@ public class MainController implements Initializable {
 
                     preparedStatement = connection.prepareStatement(insertPay);
                     preparedStatement.setString(1, String.valueOf(customerID));
-                    preparedStatement.setString(2, String.valueOf(tPrice));
+                    preparedStatement.setDouble(2, tPrice);
                     preparedStatement.setString(3, String.valueOf(sqlDate));
                     preparedStatement.setString(4, UserDetail.getUsername());
                     preparedStatement.executeUpdate();
+
+                    // === CORRECTED CODE HERE ===
+                    // Delete the completed order from the Customer table
+                    preparedStatement = connection.prepareStatement(clearCustomer);
+                    preparedStatement.setString(1, String.valueOf(customerID));
+                    preparedStatement.executeUpdate();
+                    // === END CORRECTED CODE ===
+
                     menuShowData();
 
                     alert = new Alert(Alert.AlertType.INFORMATION);
@@ -331,7 +340,7 @@ public class MainController implements Initializable {
     public ObservableList<CustomerModel> menuDisplayOrder() {
         getCustomerID();
         ObservableList<CustomerModel> listData = FXCollections.observableArrayList();
-        String sql = "SELECT * FROM Customer WHERE customer_id = ?";
+        String sql = "SELECT c.id, c.customer_id, c.product_id, c.product_name, p.type, c.quantity, c.price, c.date, c.em_username FROM Customer c JOIN Product p ON c.product_id = p.product_id WHERE c.customer_id = ?";
         connection = Database.connectionDB();
         try {
             preparedStatement = connection.prepareStatement(sql);
@@ -346,8 +355,9 @@ public class MainController implements Initializable {
                         resultSet.getString("customer_id"),
                         resultSet.getString("product_id"),
                         resultSet.getString("product_name"),
-                        resultSet.getString("quantity"),
-                        resultSet.getString("price"),
+                        resultSet.getString("type"),
+                        resultSet.getInt("quantity"),
+                        resultSet.getDouble("price"),
                         resultSet.getString("date"),
                         resultSet.getString("em_username")
                 ) ;
@@ -361,22 +371,22 @@ public class MainController implements Initializable {
     }
 
     public void getCustomerID(){
-        String sql ="SELECT MAX(customer_id) FROM Customer";
+        String sql ="SELECT MAX(customer_id) AS max_id FROM Customer";
         connection = Database.connectionDB();
         try {
             preparedStatement = connection.prepareStatement(sql);
             resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                customerID = resultSet.getInt("MAX(customer_id)");
+                customerID = resultSet.getInt("max_id");
             }
 
-            String checkCustomersID = "SELECT MAX(customer_id) FROM Receipt";
+            String checkCustomersID = "SELECT MAX(customer_id) AS max_id FROM Receipt";
             preparedStatement = connection.prepareStatement(checkCustomersID);
             resultSet = preparedStatement.executeQuery();
             int checkID = 0;
             if(resultSet.next()){
-                checkID = resultSet.getInt("MAX(customer_id)");
+                checkID = resultSet.getInt("max_id");
             }
 
             if(customerID == 0) {
@@ -422,14 +432,13 @@ public class MainController implements Initializable {
                     Date date = new Date();
                     java.sql.Date _date = new java.sql.Date(date.getTime());
                     String path = UserDetail.getPath();
-                    path = path.replace("\\", "\\\\");
 
                     preparedStatement = connection.prepareStatement(insertData);
                     preparedStatement.setString(1, product_id_textfield.getText());
                     preparedStatement.setString(2, product_name_textfield.getText());
                     preparedStatement.setString(3, type_combobox.getSelectionModel().getSelectedItem());
-                    preparedStatement.setString(4, stock_textfield.getText());
-                    preparedStatement.setString(5, price_textfield.getText());
+                    preparedStatement.setInt(4, Integer.parseInt(stock_textfield.getText()));
+                    preparedStatement.setDouble(5, Double.parseDouble(price_textfield.getText()));
                     preparedStatement.setString(6, status_combobox.getSelectionModel().getSelectedItem());
                     preparedStatement.setString(7, path);
                     preparedStatement.setString(8, String.valueOf(_date));
@@ -469,7 +478,7 @@ public class MainController implements Initializable {
             if (optional.get().equals(ButtonType.OK)) {
                 try {
                     preparedStatement = connection.prepareStatement(deleteData);
-                    preparedStatement.setString(1, String.valueOf(UserDetail.getId()));
+                    preparedStatement.setInt(1, UserDetail.getId()); // Corrected line
                     preparedStatement.executeUpdate();
 
                     getSuccessAlert("Successfully Deleted!");
@@ -516,12 +525,12 @@ public class MainController implements Initializable {
                 preparedStatement.setString(1, product_id_textfield.getText());
                 preparedStatement.setString(2, product_name_textfield.getText());
                 preparedStatement.setString(3, type_combobox.getSelectionModel().getSelectedItem());
-                preparedStatement.setString(4, stock_textfield.getText());
-                preparedStatement.setString(5, price_textfield.getText());
+                preparedStatement.setInt(4, Integer.parseInt(stock_textfield.getText()));
+                preparedStatement.setDouble(5, Double.parseDouble(price_textfield.getText()));
                 preparedStatement.setString(6, status_combobox.getSelectionModel().getSelectedItem());
                 preparedStatement.setString(7, path);
                 preparedStatement.setString(8, String.valueOf(_date));
-                preparedStatement.setString(9, String.valueOf(UserDetail.getId()));
+                preparedStatement.setInt(9, UserDetail.getId());
                 alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Alert");
                 alert.setHeaderText(null);
@@ -538,7 +547,6 @@ public class MainController implements Initializable {
                     alert.setTitle("Error Message");
                     alert.setHeaderText(null);
                     alert.setContentText("Cancelled");
-                    alert.showAndWait();
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);

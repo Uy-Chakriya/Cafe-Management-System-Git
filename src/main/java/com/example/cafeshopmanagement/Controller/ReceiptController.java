@@ -46,24 +46,20 @@ public class ReceiptController implements Initializable {
 
             while (resultSet.next()) {
                 CustomerModel customer = new CustomerModel(
-                        0, // id is not needed for the receipt view
-                        null, // customer_id is not needed in the table view
-                        null, // product_id not needed in table view
+                        0,
+                        null,
+                        null,
                         resultSet.getString("product_name"),
-                        resultSet.getString("quantity"),
-                        resultSet.getString("price"),
-                        null, // date not needed
-                        null  // em_username not needed
+                        resultSet.getString("type"),
+                        resultSet.getInt("quantity"),
+                        resultSet.getDouble("price"),
+                        null,
+                        null
                 );
-                // The `CustomerModel` class does not have a field for `product_type`, so this will not display.
-                // To fix this, you would need to add `private String product_type;` to `CustomerModel`
-                // and a corresponding getter/setter.
                 receiptList.add(customer);
             }
 
             receipt_product_name.setCellValueFactory(new PropertyValueFactory<>("product_name"));
-            // The following line will not work with your current CustomerModel class.
-            // You will need to modify the CustomerModel to include `product_type`.
             receipt_product_type.setCellValueFactory(new PropertyValueFactory<>("product_type"));
             receipt_quantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
             receipt_price.setCellValueFactory(new PropertyValueFactory<>("price"));

@@ -56,7 +56,7 @@ public class LoginController implements Initializable {
     private PreparedStatement preparedStatement = null;
     private ResultSet resultSet;
     private final String[] questionList = {
-            "what is your favorite color? ",
+            "what is your favorite color?",
     };
 
     ObservableList<String> observableList = FXCollections.observableArrayList(questionList);
@@ -154,7 +154,7 @@ public class LoginController implements Initializable {
             connection = Database.connectionDB();
             System.out.println(isDBConnected());
             try {
-                String checkUsername = "SELECT username FROM Employee WHERE username == '" + register_account_username.getText() + "'";
+                String checkUsername = "SELECT username FROM Employee WHERE username = '" + register_account_username.getText() + "'";
                 preparedStatement = connection.prepareStatement(checkUsername);
                 resultSet = preparedStatement.executeQuery();
                 if (resultSet.next()) {
@@ -370,7 +370,7 @@ public class LoginController implements Initializable {
         user_proceed.setOnAction(event -> proceedAction());
         change_password.setOnAction(event -> {
 
-                changePasswordAction();
+            changePasswordAction();
 
         });
     }

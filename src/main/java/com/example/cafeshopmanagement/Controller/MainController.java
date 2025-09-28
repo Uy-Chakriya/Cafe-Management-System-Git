@@ -1,5 +1,4 @@
 package com.example.cafeshopmanagement.Controller;
-
 import com.example.cafeshopmanagement.App;
 import com.example.cafeshopmanagement.Database.Database;
 import com.example.cafeshopmanagement.Model.CustomerModel;
@@ -33,7 +32,6 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
 public class MainController implements Initializable {
     public Label username;
     public Button dashboard_button;
@@ -83,21 +81,17 @@ public class MainController implements Initializable {
     public TableColumn<Receipt, Double> customer_total_col;
     public TableColumn<Receipt, String> customer_date_col;
     public TableColumn<Receipt, String> customer_cashier_col;
-
     private Alert alert;
-
     private Image image;
     private String[] list = {
             "Meal",
             "Drinks",
     };
     ObservableList<String> typeList = FXCollections.observableArrayList(list);
-
     private String[] status = {
             "Available",
             "Unavailable"
     };
-
 
     //==>> connect to data base
 

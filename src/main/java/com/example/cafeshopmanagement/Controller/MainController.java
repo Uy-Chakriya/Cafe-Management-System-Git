@@ -178,6 +178,7 @@ public class MainController implements Initializable {
     }
 
     private String totalPrice = "";
+
     public void menuGetTotal(){
         String total = "SELECT SUM(price) AS total_price FROM Customer WHERE em_username = ?";
         connection = Database.connectionDB();

@@ -1,6 +1,4 @@
 package com.example.cafeshopmanagement.Model;
-
-
 public class UserDetail {
     private static String username;
     private static String path;

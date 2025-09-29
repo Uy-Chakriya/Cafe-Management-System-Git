@@ -6,7 +6,15 @@
   <component name="ChangeListManager">
     <list default="true" id="5ddef2a2-bac1-4dcc-b873-5ed0ecde15d8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Controller/CardProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Controller/CardProductController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Controller/LoginController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Controller/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Controller/ReceiptController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Controller/ReceiptController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Model/CustomerModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Model/CustomerModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Model/ProductData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Model/ProductData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Model/Receipt.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Model/Receipt.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Model/UserDetail.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Model/UserDetail.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -163,7 +171,9 @@
       <workItem from="1759011921028" duration="94000" />
       <workItem from="1759012024872" duration="23000" />
       <workItem from="1759012117481" duration="7149000" />
-      <workItem from="1759021798730" duration="5143000" />
+      <workItem from="1759021798730" duration="8305000" />
+      <workItem from="1759038052689" duration="1286000" />
+      <workItem from="1759056567721" duration="321000" />
     </task>
     <servers />
   </component>
@@ -175,26 +185,22 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Controller/MainController.java</url>
-          <line>367</line>
+          <line>368</line>
           <option name="timeStamp" value="12" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Controller/MainController.java</url>
-          <line>451</line>
+          <line>452</line>
           <option name="timeStamp" value="16" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
+        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Controller/MainController.java</url>
-          <line>450</line>
-          <properties class="com.example.cafeshopmanagement.Controller.MainController" method="inventoryDeleteBtn">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="15" />
+          <line>136</line>
+          <option name="timeStamp" value="22" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Controller/MainController.java</url>
-          <line>595</line>
+          <line>596</line>
           <properties class="com.example.cafeshopmanagement.Controller.MainController" method="inventoryShowData">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />

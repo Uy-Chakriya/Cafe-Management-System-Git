@@ -1,8 +1,4 @@
 package com.example.cafeshopmanagement.Model;
-
-
-import java.sql.Date;
-
 public class ProductData {
     private Integer id;
     private String productId;

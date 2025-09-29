@@ -1,12 +1,10 @@
 package com.example.cafeshopmanagement.Model;
-
 public class Receipt {
     private Integer id;
     private String customer_id;
     private Double total;
     private String date;
     private String em_username;
-
     public Receipt(Integer id, String customerId, Double total, String date, String emUsername) {
         this.id = id;
         this.customer_id = customerId;

@@ -23,22 +23,18 @@ public class ReceiptController implements Initializable {
     public TableColumn<CustomerModel, String> receipt_quantity;
     public TableColumn<CustomerModel, String> receipt_price;
     public Label receipt_total;
-
     private Connection connection;
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;
-
     public void setReceiptData(int customerID, double total) {
         receipt_customer_id.setText(String.valueOf(customerID));
         receipt_total.setText(String.valueOf(total));
         showReceiptTable(customerID);
     }
-
     private void showReceiptTable(int customerID) {
         ObservableList<CustomerModel> receiptList = FXCollections.observableArrayList();
         String sql = "SELECT c.product_name, p.type, c.quantity, c.price FROM Customer c JOIN Product p ON c.product_id = p.product_id WHERE c.customer_id = ?";
         connection = Database.connectionDB();
-
         try {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, customerID);

@@ -1,5 +1,4 @@
 package com.example.cafeshopmanagement.Controller;
-
 import com.example.cafeshopmanagement.App;
 import com.example.cafeshopmanagement.Database.Database;
 import com.example.cafeshopmanagement.Model.UserDetail;
@@ -23,7 +22,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.ResourceBundle;
-
 public class LoginController implements Initializable {
 
     public AnchorPane login_section;
@@ -51,14 +49,12 @@ public class LoginController implements Initializable {
     public PasswordField new_password;
     public AnchorPane forget_password_section;
     public AnchorPane forget_password_proceed_section;
-
     private Connection connection = null;
     private PreparedStatement preparedStatement = null;
     private ResultSet resultSet;
     private final String[] questionList = {
             "what is your favorite color?",
     };
-
     ObservableList<String> observableList = FXCollections.observableArrayList(questionList);
 
     private Alert alert;
@@ -292,17 +288,16 @@ public class LoginController implements Initializable {
 
     }
 
-    public void changePasswordAction()  {
+    public void changePasswordAction() {
         if (!new_password.getText().equals(confirm_password.getText())) {
             alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error Message");
             alert.setHeaderText(null);
             alert.setContentText("New password and confirm password are not the same.");
             alert.showAndWait();
-        } else if(new_password.getText().isEmpty() || confirm_password.getText().isEmpty()) {
+        } else if (new_password.getText().isEmpty() || confirm_password.getText().isEmpty()) {
             fillAllFieldError();
-        }
-        else if(new_password.getText().length() < 8) {
+        } else if (new_password.getText().length() < 8) {
             invalidPassword();
         } else {
             String changePassword = "UPDATE Employee SET password = ? WHERE username = ?";
@@ -333,26 +328,11 @@ public class LoginController implements Initializable {
 
             } catch (SQLException e) {
                 e.printStackTrace();
-//                throw new RuntimeException(e);
             }
-//            finally {
-//                try {
-//                    preparedStatement.close();
-//                } catch (SQLException e) {
-//                    throw new RuntimeException(e);
-//                }
-//                if (connection != null) {
-//                    try {
-//                        connection.close(); // <-- This is important
-//                    } catch (SQLException e) {
-//                        /* handle exception */
-//                    }
-//                }
-//            }
         }
     }
-
     @Override
+
     public void initialize(URL url, ResourceBundle resourceBundle) {
         register_account_question.setItems(observableList);
         user_question.setItems(observableList);
@@ -369,7 +349,6 @@ public class LoginController implements Initializable {
         back_to.setOnAction(event -> backToLogin());
         user_proceed.setOnAction(event -> proceedAction());
         change_password.setOnAction(event -> {
-
             changePasswordAction();
 
         });

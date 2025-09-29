@@ -13,7 +13,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.ResourceBundle;
-
 public class CardProductController implements Initializable {
     public Label card_product_name;
     public Label card_price;

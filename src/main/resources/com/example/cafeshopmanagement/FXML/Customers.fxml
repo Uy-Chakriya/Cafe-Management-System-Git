@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="customers_section" prefHeight="800.0" prefWidth="1057.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cafeshopmanagement.Controller.CustomersController">
+    <children>
+        <Label layoutX="419.0" layoutY="392.0" text="Customers Page">
+            <font>
+                <Font size="25.0" />
+                //test
+            </font>
+        </Label>
+    </children>
+</AnchorPane>

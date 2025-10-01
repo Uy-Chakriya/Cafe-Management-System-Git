@@ -1,4 +1,5 @@
 package com.example.cafeshopmanagement.Controller;
+
 import com.example.cafeshopmanagement.App;
 import com.example.cafeshopmanagement.Database.Database;
 import com.example.cafeshopmanagement.Model.UserDetail;
@@ -22,6 +23,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.ResourceBundle;
+
 public class LoginController implements Initializable {
 
     public AnchorPane login_section;
@@ -49,12 +51,16 @@ public class LoginController implements Initializable {
     public PasswordField new_password;
     public AnchorPane forget_password_section;
     public AnchorPane forget_password_proceed_section;
+
     private Connection connection = null;
     private PreparedStatement preparedStatement = null;
     private ResultSet resultSet;
     private final String[] questionList = {
-            "what is your favorite color?",
+            "What is your favorite Color?",
+            "What is your favorite food?",
+            "What is your date of birth?",
     };
+
     ObservableList<String> observableList = FXCollections.observableArrayList(questionList);
 
     private Alert alert;
@@ -77,7 +83,7 @@ public class LoginController implements Initializable {
                     side_create_account_button.setVisible(false);
                     forget_password_section.setVisible(true);
                     forget_password_proceed_section.setVisible(false);
-                    side_create_account_button.setVisible(true);
+                    // side_create_account_button.setVisible(true); // Redundant line in original logic
                 } else {
                     alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error Message");
@@ -114,7 +120,8 @@ public class LoginController implements Initializable {
                     alert.setContentText("Successfully Login!");
                     alert.showAndWait();
 
-                    FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("FXML/Main.fxml"));
+                    // FIX: Changed FXML path to full package-qualified absolute path to resolve 'Location is not set'
+                    FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/com/example/cafeshopmanagement/FXML/Main.fxml"));
                     Stage stage =  new Stage();
                     Scene scene = new Scene(fxmlLoader.load());
                     stage.setScene(scene);
@@ -142,17 +149,18 @@ public class LoginController implements Initializable {
         ) {
             fillAllFieldError();
         } else {
-//            SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-DD HH:MM");
-//            String date = sdf.format(new Date());
             Date date = new Date();
             java.sql.Date _date = new java.sql.Date(date.getTime());
             String regData = "INSERT INTO Employee (username, password, question, answer, date) VALUES (?, ?, ?, ?, ?)";
             connection = Database.connectionDB();
             System.out.println(isDBConnected());
             try {
-                String checkUsername = "SELECT username FROM Employee WHERE username = '" + register_account_username.getText() + "'";
+                // FIX: Corrected SQL syntax and converted to parameterized query
+                String checkUsername = "SELECT username FROM Employee WHERE username = ?";
                 preparedStatement = connection.prepareStatement(checkUsername);
+                preparedStatement.setString(1, register_account_username.getText());
                 resultSet = preparedStatement.executeQuery();
+
                 if (resultSet.next()) {
                     alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error Message");
@@ -187,16 +195,11 @@ public class LoginController implements Initializable {
                     register_account_question.getSelectionModel().clearSelection();
 
                     transitionLeft();
-//                if (resultSet.next()) {
-//                    System.out.println("Sent");
-//                } else {
-//                    System.out.println("Error");
-//                }
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             } finally {
-                preparedStatement.close();
+                if (preparedStatement != null) preparedStatement.close();
                 if (connection != null) {
                     try {
                         connection.close(); // <-- This is important
@@ -204,14 +207,13 @@ public class LoginController implements Initializable {
                         /* handle exception */
                     }
                 }
-//                resultSet.close();
             }
         }
     }
 
     public boolean isDBConnected() {
         try {
-            return !connection.isClosed();
+            return connection != null && !connection.isClosed();
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
@@ -288,16 +290,17 @@ public class LoginController implements Initializable {
 
     }
 
-    public void changePasswordAction() {
+    public void changePasswordAction()  {
         if (!new_password.getText().equals(confirm_password.getText())) {
             alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error Message");
             alert.setHeaderText(null);
             alert.setContentText("New password and confirm password are not the same.");
             alert.showAndWait();
-        } else if (new_password.getText().isEmpty() || confirm_password.getText().isEmpty()) {
+        } else if(new_password.getText().isEmpty() || confirm_password.getText().isEmpty()) {
             fillAllFieldError();
-        } else if (new_password.getText().length() < 8) {
+        }
+        else if(new_password.getText().length() < 8) {
             invalidPassword();
         } else {
             String changePassword = "UPDATE Employee SET password = ? WHERE username = ?";
@@ -306,12 +309,11 @@ public class LoginController implements Initializable {
                 preparedStatement = connection.prepareStatement(changePassword);
                 preparedStatement.setString(1, new_password.getText());
                 preparedStatement.setString(2, user_username.getText());
-                boolean rowsAffected = preparedStatement.execute();
-                System.out.println(rowsAffected);
-                if (rowsAffected) {
-                    System.out.println("Internal Error");
 
-                } else {
+                // FIX: Use executeUpdate() and check if any rows were affected
+                int rowsAffected = preparedStatement.executeUpdate();
+
+                if (rowsAffected > 0) {
                     alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Information Message");
                     alert.setHeaderText(null);
@@ -323,6 +325,13 @@ public class LoginController implements Initializable {
                     user_username.setText("");
                     user_answer.setText("");
                     user_question.getSelectionModel().clearSelection();
+                } else {
+                    System.out.println("No rows affected. User not found or internal error.");
+                    alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Failed to change password. User might not exist.");
+                    alert.showAndWait();
                 }
 
 
@@ -331,8 +340,8 @@ public class LoginController implements Initializable {
             }
         }
     }
-    @Override
 
+    @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         register_account_question.setItems(observableList);
         user_question.setItems(observableList);
@@ -350,7 +359,6 @@ public class LoginController implements Initializable {
         user_proceed.setOnAction(event -> proceedAction());
         change_password.setOnAction(event -> {
             changePasswordAction();
-
         });
     }
 

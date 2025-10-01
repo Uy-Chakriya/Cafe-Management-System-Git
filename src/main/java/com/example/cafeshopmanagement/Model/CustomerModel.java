@@ -1,4 +1,5 @@
 package com.example.cafeshopmanagement.Model;
+
 public class CustomerModel {
     private Integer id;
     private String customer_id;
@@ -10,12 +11,12 @@ public class CustomerModel {
     private String date;
     private String em_username;
 
-    public CustomerModel(Integer id, String customerId, String productId, String productName, String product_type, Integer quantity, Double price, String date, String emUsername) {
+    public CustomerModel(Integer id, String customerId, String productId, String productName, String productType, Integer quantity, Double price, String date, String emUsername) {
         this.id = id;
         customer_id = customerId;
         product_id = productId;
         product_name = productName;
-        this.product_type = product_type;
+        product_type = productType;
         this.quantity = quantity;
         this.price = price;
         this.date = date;

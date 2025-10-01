@@ -30,9 +30,11 @@ public class CardProductController implements Initializable {
     private String type;
     private String prod_date;
     private String prod_image;
+    private MenuController menuController; // Add a reference to MenuController
 
-    public void setData(ProductData productData) {
+    public void setData(ProductData productData, MenuController menuController) {
         this.productData = productData;
+        this.menuController = menuController; // Set the controller reference
         type = productData.getType();
         prod_image = productData.getImage();
         prod_date = productData.getDate();
@@ -50,8 +52,8 @@ public class CardProductController implements Initializable {
     private double pr;
 
     public void addBtn() {
-        MainController mainController = new MainController();
-        mainController.getCustomerID();
+        // You no longer need this line: MainController mainController = new MainController();
+        menuController.getCustomerID(); // Use the injected MenuController reference
         quantity = card_spinner.getValue();
         String check = "";
         String checkAvailable = "SELECT status FROM Product WHERE product_id = ?";
@@ -102,16 +104,17 @@ public class CardProductController implements Initializable {
                     alert.setContentText("Invalid. This product is out of stock");
                     alert.showAndWait();
                 } else {
-                    String insertData = "INSERT INTO Customer (customer_id, product_id, product_name, quantity, price, date, em_username) VALUES(?,?,?,?,?,?,?)";
+                    String insertData = "INSERT INTO Customer (customer_id, product_id, product_name, product_type, quantity, price, date, em_username) VALUES(?,?,?,?,?,?,?,?)";
                     preparedStatement = connection.prepareStatement(insertData);
                     preparedStatement.setString(1, String.valueOf(UserDetail.getCustomerID()));
                     preparedStatement.setString(2, productID);
                     preparedStatement.setString(3, card_product_name.getText());
-                    preparedStatement.setInt(4, card_spinner.getValue());
+                    preparedStatement.setString(4, type);
+                    preparedStatement.setInt(5, card_spinner.getValue());
                     total = (quantity * pr);
-                    preparedStatement.setDouble(5, total);
-                    preparedStatement.setString(6, String.valueOf(sqlDate));
-                    preparedStatement.setString(7, UserDetail.getUsername());
+                    preparedStatement.setDouble(6, total);
+                    preparedStatement.setString(7, String.valueOf(sqlDate));
+                    preparedStatement.setString(8, UserDetail.getUsername());
 
                     preparedStatement.executeUpdate();
 
@@ -137,7 +140,7 @@ public class CardProductController implements Initializable {
                     alert.showAndWait();
 
 
-                    mainController.menuGetTotal();
+                    menuController.menuGetTotal(); // Use the injected MenuController reference
                 }
 
             }

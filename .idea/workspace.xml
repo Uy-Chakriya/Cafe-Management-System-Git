@@ -5,7 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5ddef2a2-bac1-4dcc-b873-5ed0ecde15d8" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Controller/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/cafeshopmanagement/FXML/CardProduct.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/cafeshopmanagement/FXML/CardProduct.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/cafeshopmanagement/FXML/Main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/cafeshopmanagement/FXML/Main.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/cafeshopmanagement/FXML/Reciept.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/cafeshopmanagement/FXML/Reciept.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -165,6 +170,9 @@
       <workItem from="1759021798730" duration="8305000" />
       <workItem from="1759038052689" duration="1286000" />
       <workItem from="1759056567721" duration="321000" />
+      <workItem from="1759215704924" duration="52000" />
+      <workItem from="1759215933175" duration="2985000" />
+      <workItem from="1759236862265" duration="1538000" />
     </task>
     <servers />
   </component>
@@ -176,13 +184,8 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Controller/MainController.java</url>
-          <line>368</line>
+          <line>360</line>
           <option name="timeStamp" value="12" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Controller/MainController.java</url>
-          <line>452</line>
-          <option name="timeStamp" value="16" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Controller/MainController.java</url>
@@ -191,7 +194,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Controller/MainController.java</url>
-          <line>596</line>
+          <line>588</line>
           <properties class="com.example.cafeshopmanagement.Controller.MainController" method="inventoryShowData">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />

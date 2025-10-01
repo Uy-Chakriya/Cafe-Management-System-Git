@@ -253,9 +253,6 @@ public class MainController implements Initializable {
     }
 
     public void menuPayBtn() {
-        // This method now runs to ensure tPrice is updated.
-        menuAmount();
-
         if (tPrice ==0) {
             alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error Message");
@@ -264,7 +261,6 @@ public class MainController implements Initializable {
             alert.showAndWait();
         } else {
             String insertPay = "INSERT INTO Receipt (customer_id, total, date, em_username) VALUES(?,?,?,?)";
-            String clearCustomer = "DELETE FROM Customer WHERE customer_id = ?";
             connection = Database.connectionDB();
             try{
                 if (amount ==0) {
@@ -285,27 +281,23 @@ public class MainController implements Initializable {
 
                     preparedStatement = connection.prepareStatement(insertPay);
                     preparedStatement.setString(1, String.valueOf(customerID));
-                    preparedStatement.setDouble(2, tPrice);
+                    preparedStatement.setString(2, String.valueOf(tPrice));
                     preparedStatement.setString(3, String.valueOf(sqlDate));
                     preparedStatement.setString(4, UserDetail.getUsername());
                     preparedStatement.executeUpdate();
-
-                    // === CORRECTED CODE HERE ===
-                    // Delete the completed order from the Customer table
-                    preparedStatement = connection.prepareStatement(clearCustomer);
-                    preparedStatement.setString(1, String.valueOf(customerID));
-                    preparedStatement.executeUpdate();
-                    // === END CORRECTED CODE ===
-
                     menuShowData();
+
+                    // This is the added code to clear the order from the Customer table
+                    String clearCustomer = "DELETE FROM Customer WHERE customer_id = ?";
+                    preparedStatement = connection.prepareStatement(clearCustomer);
+                    preparedStatement.setInt(1, customerID);
+                    preparedStatement.executeUpdate();
 
                     alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Information Message");
                     alert.setHeaderText(null);
                     alert.setContentText("Successful.");
                     alert.showAndWait();
-
-                    menuReceiptBtn();
 
                     menuShowData();
                     menuRestart();

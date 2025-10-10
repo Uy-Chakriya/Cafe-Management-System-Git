@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="customers_section" prefHeight="800.0" prefWidth="1057.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cafeshopmanagement.Controller.CustomersController">
+<AnchorPane fx:id="customers_section" prefHeight="800.0" prefWidth="1057.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cafeshopmanagement.Controller.CustomersController">
     <children>
-        <Label layoutX="419.0" layoutY="392.0" text="Customers Page">
-            <font>
-                <Font size="25.0" />
-                //test
-            </font>
-        </Label>
+        <TableView fx:id="customer_tableview" layoutX="14.0" layoutY="14.0" prefHeight="774.0" prefWidth="1030.0" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="14.0">
+            <columns>
+                <TableColumn fx:id="customer_id_col" prefWidth="121.0" text="Customer ID" />
+                <TableColumn fx:id="customer_total_col" prefWidth="121.0" text="Total" />
+                <TableColumn fx:id="customer_date_col" prefWidth="121.0" text="Date" />
+                <TableColumn fx:id="customer_cashier_col" prefWidth="121.0" text="Cashier" />
+            </columns>
+            <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+            </columnResizePolicy>
+        </TableView>
     </children>
 </AnchorPane>

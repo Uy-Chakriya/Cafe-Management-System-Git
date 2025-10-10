@@ -6,11 +6,12 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
+<?import java.lang.String?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="260.0" prefWidth="230.0" stylesheets="@../Styles/CardProductStyle.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cafeshopmanagement.Controller.CardProductController">
-   <VBox layoutX="26.0" layoutY="-8.0" prefHeight="260.0" prefWidth="230.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-      <HBox alignment="CENTER_LEFT" prefHeight="51.0" prefWidth="222.0">
-         <Label fx:id="card_product_name" prefHeight="35.0" prefWidth="164.0" text="Drink" wrapText="true">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="260.0" prefWidth="195.0" stylesheets="@../Styles/CardProductStyle.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cafeshopmanagement.Controller.CardProductController">
+   <VBox prefHeight="260.0" prefWidth="195.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <HBox alignment="CENTER_LEFT" prefHeight="51.0" prefWidth="195.0">
+         <Label fx:id="card_product_name" prefHeight="35.0" prefWidth="130.0" text="Drink" wrapText="true">
             <HBox.margin>
                <Insets left="10.0" />
             </HBox.margin>
@@ -18,7 +19,7 @@
                <Font size="14.0" />
             </font>
          </Label>
-         <Label fx:id="card_price" alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="63.0" text="\$0.0">
+         <Label fx:id="card_price" alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="55.0" text="\$0.0">
             <HBox.margin>
                <Insets right="10.0" />
             </HBox.margin>
@@ -27,15 +28,16 @@
             </font>
          </Label>
       </HBox>
-      <AnchorPane prefHeight="164.0" prefWidth="230.0">
-         <ImageView fx:id="card_imageview" fitHeight="150.0" fitWidth="200.0" layoutX="15.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true" />
+      <AnchorPane prefHeight="164.0" prefWidth="195.0">
+         <ImageView fx:id="card_imageview" fitHeight="150.0" fitWidth="165.0" layoutX="15.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true" />
       </AnchorPane>
-      <HBox alignment="CENTER" prefHeight="45.0" prefWidth="230.0">
+      <HBox alignment="CENTER" prefHeight="45.0" prefWidth="195.0">
          <Spinner fx:id="card_spinner" prefHeight="27.0" prefWidth="76.0" />
          <Button fx:id="card_add_btn" mnemonicParsing="false" onAction="#addBtn" prefHeight="30.0" prefWidth="88.0" styleClass="btn" text="Add">
             <HBox.margin>
                <Insets left="10.0" />
-            </HBox.margin></Button>
+            </HBox.margin>
+         </Button>
       </HBox>
    </VBox>
    <styleClass>

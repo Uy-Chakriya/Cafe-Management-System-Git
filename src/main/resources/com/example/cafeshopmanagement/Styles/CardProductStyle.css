@@ -1,6 +1,12 @@
 .card {
     -fx-background-color: #ECDDD7;
-    -fx-background-radius: 5px;
+    -fx-background-radius: 8px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0.5, 0, 2);
+}
+
+.card:hover {
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 15, 0.5, 0, 0);
 }
 
 .shadow {
@@ -10,6 +16,7 @@
 .btn {
     -fx-background-color: linear-gradient(to bottom right, #AA705B, #714024);
     -fx-text-fill: #ffffff;
+    -fx-background-radius: 8px;
 }
 
 .btn:hover {

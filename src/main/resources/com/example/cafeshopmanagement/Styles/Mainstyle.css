@@ -1,8 +1,12 @@
-.header-label {
-    -fx-border-color: #714024;
-    -fx-border-width: 0 0 0 5px;
-    -fx-padding: 0 0 0 5px;
-    -fx-text-fill: #714024;
+.nav-form {
+    -fx-background-color: linear-gradient(to bottom right, #AA705B, #714024);
+    -fx-border-color: #ECDDD7;
+    -fx-border-width: 0 0 0 0;
+    -fx-background-radius: 8px; /* Added for rounded corners */
+}
+
+.nav-form Label {
+    -fx-text-fill: #ECDDD7;
 }
 
 .header {
@@ -10,17 +14,21 @@
     -fx-alignment: center;
     -fx-border-color: #ECDDD7;
     -fx-border-width: 0 0 1px 0;
+    -fx-background-radius: 8px; /* Added for rounded corners */
 }
 
 .header Label {
     -fx-text-fill: #ECDDD7;
 }
 
-.nav-form {
-    -fx-background-color: linear-gradient(to bottom right, #AA705B, #714024);
+.profile-image {
+    -fx-border-color: #ECDDD7;
+    -fx-border-width: 2px;
+    -fx-border-radius: 50%;
+    -fx-background-radius: 50%;
 }
 
-.nav-form Label {
+.profile-email {
     -fx-text-fill: #ECDDD7;
 }
 
@@ -30,12 +38,17 @@
     -fx-border-width: 0.5;
     -fx-text-fill: #ECDDD7;
     -fx-font-size: 14px;
+    -fx-background-radius: 8px; /* Added for rounded corners */
 }
 
 .nav-btn:hover {
     -fx-cursor: hand;
     -fx-background-color: #ECDDD7;
     -fx-text-fill: #714024;
+}
+
+.icon-color {
+    -fx-fill: #ECDDD7;
 }
 
 .log-out {
@@ -60,6 +73,7 @@
 
 .white-background {
     -fx-background-color: #ECDDD7;
+    -fx-background-radius: 8px; /* Added for rounded corners */
 }
 
 .radius {
@@ -68,6 +82,7 @@
 
 .transparent {
     -fx-background-color: transparent;
+    -fx-background-radius: 8px; /* Added for rounded corners */
 }
 
 .table-view {
@@ -97,6 +112,7 @@
     -fx-background-color: linear-gradient(to bottom right, #AA705B, #714024);
     -fx-text-fill: #ECDDD7;
     -fx-font-size: 14px;
+    -fx-background-radius: 8px;
 }
 
 .btn:hover {

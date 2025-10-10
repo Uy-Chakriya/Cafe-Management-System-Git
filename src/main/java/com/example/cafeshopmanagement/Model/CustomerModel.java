@@ -2,7 +2,7 @@ package com.example.cafeshopmanagement.Model;
 
 public class CustomerModel {
     private Integer id;
-    private String customer_id;
+    private String customer_id; // Corrected to String to match database schema
     private String product_id;
     private String product_name;
     private String product_type;
@@ -13,14 +13,14 @@ public class CustomerModel {
 
     public CustomerModel(Integer id, String customerId, String productId, String productName, String productType, Integer quantity, Double price, String date, String emUsername) {
         this.id = id;
-        customer_id = customerId;
-        product_id = productId;
-        product_name = productName;
-        product_type = productType;
+        this.customer_id = customerId;
+        this.product_id = productId;
+        this.product_name = productName;
+        this.product_type = productType;
         this.quantity = quantity;
         this.price = price;
         this.date = date;
-        em_username = emUsername;
+        this.em_username = emUsername;
     }
 
     public Integer getId() {

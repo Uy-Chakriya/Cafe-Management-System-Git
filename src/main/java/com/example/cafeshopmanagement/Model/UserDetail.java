@@ -5,7 +5,6 @@ public class UserDetail {
     private static String date;
     private static Integer id;
     private static Integer customerID;
-    private Integer quantity;
 
     public static String getUsername() {
         return username;
@@ -45,13 +44,5 @@ public class UserDetail {
 
     public static void setCustomerID(Integer customerID) {
         UserDetail.customerID = customerID;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
     }
 }

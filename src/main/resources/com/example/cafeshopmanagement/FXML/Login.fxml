@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+<?import java.lang.String?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cafeshopmanagement.Controller.LoginController">
+    <AnchorPane prefHeight="600.0" prefWidth="1000.0">
+        <AnchorPane fx:id="side_form" layoutX="500.0" prefHeight="600.0" prefWidth="500.0" styleClass="gradient" stylesheets="@../Styles/LoginStyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Button fx:id="side_already_have_an_account" layoutX="162.0" layoutY="501.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="175.0" styleClass="createAccountButton" text="Already have an account?" visible="false" />
+            <AnchorPane fx:id="forget_password_proceed_section" layoutX="146.0" layoutY="25.0" prefHeight="297.0" prefWidth="250.0" visible="false">
+                <Label layoutX="15.0" layoutY="14.0" prefHeight="25.0" prefWidth="220.0" styleClass="header-label" text="  Forget Password?" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="14.0">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <Label layoutX="15.0" layoutY="70.0" text="Username:" />
+                <TextField fx:id="user_username" layoutX="15.0" layoutY="90.0" prefHeight="30.0" prefWidth="220.0" styleClass="textfield" />
+                <Label layoutX="15.0" layoutY="130.0" text="Question:" />
+                <ComboBox fx:id="user_question" layoutX="15.0" layoutY="150.0" prefHeight="30.0" prefWidth="220.0" styleClass="textfield" />
+                <Label layoutX="15.0" layoutY="190.0" text="Answer:" />
+                <TextField fx:id="user_answer" layoutX="15.0" layoutY="210.0" prefHeight="30.0" prefWidth="220.0" styleClass="textfield" />
+                <Button fx:id="user_proceed" layoutX="15.0" layoutY="256.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="220.0" styleClass="btn" text="Proceed" />
+                <Button fx:id="back_to_login" layoutX="10.0" layoutY="296.0" mnemonicParsing="false" onAction="#backToLogin" prefHeight="30.0" prefWidth="220.0" styleClass="btn" text="Back to Login" />
+            </AnchorPane>
+            <AnchorPane fx:id="forget_password_section" layoutX="146.0" layoutY="100.0" prefHeight="255.0" prefWidth="250.0" visible="false">
+                <Label layoutX="15.0" layoutY="14.0" prefHeight="25.0" prefWidth="220.0" styleClass="header-label" text="  Change Password" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="14.0">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <Label layoutX="15.0" layoutY="70.0" text="New Password:" />
+                <PasswordField fx:id="new_password" layoutX="15.0" layoutY="90.0" prefHeight="30.0" prefWidth="220.0" styleClass="textfield" />
+                <Label layoutX="15.0" layoutY="130.0" text="Confirm Password:" />
+                <PasswordField fx:id="confirm_password" layoutX="15.0" layoutY="150.0" prefHeight="30.0" prefWidth="220.0" styleClass="textfield" />
+                <Button fx:id="change_password" layoutX="15.0" layoutY="190.0" mnemonicParsing="false" onAction="#changePasswordAction" prefHeight="30.0" prefWidth="220.0" styleClass="btn" text="Change Password" />
+                <Button fx:id="back_to" layoutX="15.0" layoutY="230.0" mnemonicParsing="false" onAction="#backToLogin" prefHeight="30.0" prefWidth="220.0" styleClass="btn" text="Back to Login" />
+            </AnchorPane>
+        </AnchorPane>
+        <AnchorPane fx:id="login_section" prefHeight="600.0" prefWidth="500.0" styleClass="white-form" stylesheets="@../Styles/LoginStyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Label layoutX="115.0" layoutY="100.0" styleClass="header-label" text="  Login" AnchorPane.leftAnchor="115.0" AnchorPane.rightAnchor="115.0">
+                <font>
+                    <Font size="25.0" />
+                </font>
+            </Label>
+            <Label layoutX="142.0" layoutY="180.0" text="Username" />
+            <TextField fx:id="login_username" layoutX="142.0" layoutY="200.0" prefHeight="30.0" prefWidth="220.0" styleClass="textfield" />
+            <Label layoutX="142.0" layoutY="240.0" text="Password" />
+            <PasswordField fx:id="login_password" layoutX="142.0" layoutY="260.0" prefHeight="30.0" prefWidth="220.0" styleClass="textfield" />
+            <Button fx:id="login_button" layoutX="142.0" layoutY="310.0" mnemonicParsing="false" onAction="#loginAction" prefHeight="30.0" prefWidth="220.0" styleClass="login-btn" text="Login" />
+            <Hyperlink fx:id="login_forget_password" layoutX="142.0" layoutY="350.0" onAction="#forgetPasswordAction" text="Forget Password?" />
+        </AnchorPane>
+        <AnchorPane fx:id="register_account_section" prefHeight="600.0" prefWidth="500.0" styleClass="white-form" stylesheets="@../Styles/LoginStyle.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Label layoutX="115.0" layoutY="60.0" styleClass="header-label" text="  Register Account" AnchorPane.leftAnchor="115.0" AnchorPane.rightAnchor="115.0">
+                <font>
+                    <Font size="25.0" />
+                </font>
+            </Label>
+            <Label layoutX="142.0" layoutY="140.0" text="Username" />
+            <TextField fx:id="register_account_username" layoutX="142.0" layoutY="160.0" prefHeight="30.0" prefWidth="220.0" styleClass="textfield" />
+            <Label layoutX="142.0" layoutY="200.0" text="Password" />
+            <PasswordField fx:id="register_account_password" layoutX="142.0" layoutY="220.0" prefHeight="30.0" prefWidth="220.0" styleClass="textfield" />
+            <Label layoutX="142.0" layoutY="260.0" text="Question" />
+            <ComboBox fx:id="register_account_question" layoutX="142.0" layoutY="280.0" prefHeight="30.0" prefWidth="220.0" styleClass="textfield" />
+            <Label layoutX="142.0" layoutY="320.0" text="Answer" />
+            <TextField fx:id="register_account_answer" layoutX="142.0" layoutY="340.0" prefHeight="30.0" prefWidth="220.0" styleClass="textfield" />
+            <Button fx:id="create_account_button" layoutX="142.0" layoutY="400.0" mnemonicParsing="false" onAction="#registrationButton" prefHeight="30.0" prefWidth="220.0" styleClass="login-btn" text="Create Account" />
+        </AnchorPane>
+    </AnchorPane>
+</StackPane>

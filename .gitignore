@@ -10,9 +10,9 @@ target/
 .idea/libraries/
 *.iws
 *.iml
+### Eclipse ###
 *.ipr
 
-### Eclipse ###
 .apt_generated
 .classpath
 .factorypath

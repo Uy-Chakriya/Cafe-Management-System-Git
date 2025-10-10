@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import java.lang.String?>
 <?import javafx.scene.chart.AreaChart?>
 <?import javafx.scene.chart.BarChart?>
@@ -24,7 +23,6 @@
         <ScrollPane layoutX="128.0" prefHeight="200.0" prefWidth="846.0" vbarPolicy="NEVER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <AnchorPane prefHeight="157.0" prefWidth="947.0" styleClass="transparent">
                 <AnchorPane layoutX="8.0" layoutY="10.0" prefHeight="135.0" prefWidth="250.0" styleClass="nav-form">
-                    <FontAwesomeIconView fill="WHITE" glyphName="USERS" layoutX="14.0" layoutY="91.0" size="5em" />
                     <Label layoutX="95.0" layoutY="105.0" text="Number of Customer">
                         <font>
                             <Font size="15" />
@@ -33,12 +31,10 @@
                     <Label fx:id="number_of_customer_label" alignment="CENTER_RIGHT" layoutX="95.0" layoutY="14.0" prefHeight="21.0" prefWidth="141.0" text="0">
                         <font>
                             <Font size="15" />
-                            //test
                         </font>
                     </Label>
                 </AnchorPane>
                 <AnchorPane layoutX="276.0" layoutY="10.0" prefHeight="135.0" prefWidth="250.0" styleClass="nav-form">
-                    <FontAwesomeIconView fill="WHITE" glyphName="DOLLAR" layoutX="14.0" layoutY="91.0" size="5em" />
                     <Label layoutX="95.0" layoutY="105.0" text="Today's Income">
                         <font>
                             <Font size="15" />
@@ -51,7 +47,6 @@
                     </Label>
                 </AnchorPane>
                 <AnchorPane layoutX="544.0" layoutY="10.0" prefHeight="135.0" prefWidth="250.0" styleClass="nav-form">
-                    <FontAwesomeIconView fill="WHITE" glyphName="MONEY" layoutX="14.0" layoutY="91.0" size="5em" />
                     <Label layoutX="95.0" layoutY="105.0" text="Total Income">
                         <font>
                             <Font size="15" />
@@ -64,7 +59,6 @@
                     </Label>
                 </AnchorPane>
                 <AnchorPane layoutX="812.0" layoutY="10.0" prefHeight="135.0" prefWidth="250.0" styleClass="nav-form">
-                    <FontAwesomeIconView fill="WHITE" glyphName="SHOPPING_CART" layoutX="14.0" layoutY="91.0" size="5em" />
                     <Label layoutX="78.0" layoutY="106.0" text="Number of Sold Product">
                         <font>
                             <Font size="15" />
@@ -91,10 +85,9 @@
                 <String fx:value="shadow" />
                 <String fx:value="white-background" />
             </styleClass>
-            <AreaChart fx:id="income_chart" layoutY="37.0" prefHeight="553.0" prefWidth="500.0" title="Income's Chart" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                <xAxis>
-                    <CategoryAxis side="BOTTOM" />
-                </xAxis>
+            <AreaChart fx:id="income_chart" layoutY="37.0" prefHeight="553.0" prefWidth="500.0" title="Income's Chart" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" style="-fx-background-color: transparent;"> <xAxis>
+                <CategoryAxis side="BOTTOM" />
+            </xAxis>
                 <yAxis>
                     <NumberAxis side="LEFT" />
                 </yAxis>
@@ -106,10 +99,9 @@
                 <String fx:value="shadow" />
                 <String fx:value="white-background" />
             </styleClass>
-            <BarChart fx:id="customer_chart" layoutX="20.0" layoutY="55.0" prefHeight="553.0" prefWidth="520.0" title="Customer's Chart" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                <xAxis>
-                    <CategoryAxis side="BOTTOM" />
-                </xAxis>
+            <BarChart fx:id="customer_chart" layoutX="20.0" layoutY="55.0" prefHeight="553.0" prefWidth="520.0" title="Customer's Chart" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" style="-fx-background-color: transparent;"> <xAxis>
+                <CategoryAxis side="BOTTOM" />
+            </xAxis>
                 <yAxis>
                     <NumberAxis side="LEFT" />
                 </yAxis>

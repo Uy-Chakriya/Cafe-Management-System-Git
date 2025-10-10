@@ -23,21 +23,17 @@ public class CardProductController implements Initializable {
     private Image image;
     private int quantity;
     private String productID;
-    private Connection connection;
-    private PreparedStatement preparedStatement;
-    private ResultSet resultSet;
     private Alert alert;
     private String type;
-    private String prod_date;
-    private String prod_image;
-    private MenuController menuController; // Add a reference to MenuController
+    private double pr;
+    private MenuController menuController;
 
+
+    // In card has add button
     public void setData(ProductData productData, MenuController menuController) {
         this.productData = productData;
-        this.menuController = menuController; // Set the controller reference
+        this.menuController = menuController;
         type = productData.getType();
-        prod_image = productData.getImage();
-        prod_date = productData.getDate();
         productID = productData.getProductId();
         card_product_name.setText(productData.getProductName());
         card_price.setText("$" + String.valueOf(productData.getPrice()));
@@ -47,110 +43,76 @@ public class CardProductController implements Initializable {
         pr = productData.getPrice();
     }
 
-    private double total;
-
-    private double pr;
-
+    // Add button
     public void addBtn() {
-        // You no longer need this line: MainController mainController = new MainController();
-        menuController.getCustomerID(); // Use the injected MenuController reference
         quantity = card_spinner.getValue();
-        String check = "";
-        String checkAvailable = "SELECT status FROM Product WHERE product_id = ?";
-        connection = Database.connectionDB();
-        try {
-            Date date = new Date();
-            java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-
-            int checkStck = 0;
-            String checkStock = "SELECT stock FROM Product WHERE product_name = ?";
-
-            preparedStatement = connection.prepareStatement(checkStock);
-            preparedStatement.setString(1, card_product_name.getText());
-            resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                checkStck = resultSet.getInt("stock");
-
-            }
-
-            if (checkStck == 0) {
-                String updateStock = "UPDATE Product SET status = ? WHERE product_id = ?";
-                preparedStatement = connection.prepareStatement(updateStock);
-                preparedStatement.setString(1, "Unavailable");
-                preparedStatement.setString(2, productID);
-                preparedStatement.executeUpdate();
-            }
-
-
-            preparedStatement = connection.prepareStatement(checkAvailable);
-            preparedStatement.setString(1, productID);
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                check = resultSet.getString("status");
-            }
-            if (!check.equals("Available") || quantity == 0) {
-                alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error Message");
-                alert.setHeaderText(null);
-                alert.setContentText("Something went wrong");
-                alert.showAndWait();
-            } else {
-
-                if (checkStck < card_spinner.getValue()) {
-                    alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error Message");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Invalid. This product is out of stock");
-                    alert.showAndWait();
-                } else {
-                    String insertData = "INSERT INTO Customer (customer_id, product_id, product_name, product_type, quantity, price, date, em_username) VALUES(?,?,?,?,?,?,?,?)";
-                    preparedStatement = connection.prepareStatement(insertData);
-                    preparedStatement.setString(1, String.valueOf(UserDetail.getCustomerID()));
-                    preparedStatement.setString(2, productID);
-                    preparedStatement.setString(3, card_product_name.getText());
-                    preparedStatement.setString(4, type);
-                    preparedStatement.setInt(5, card_spinner.getValue());
-                    total = (quantity * pr);
-                    preparedStatement.setDouble(6, total);
-                    preparedStatement.setString(7, String.valueOf(sqlDate));
-                    preparedStatement.setString(8, UserDetail.getUsername());
-
-                    preparedStatement.executeUpdate();
-
-                    int upStock = checkStck - quantity;
-
-                    prod_image = prod_image.replace("\\", "\\\\");
-
-                    String updateStock = "UPDATE Product SET product_name =? , type = ? , stock=?, price = ?, status = ?, image = ?, date =? WHERE product_id = ?";
-                    preparedStatement = connection.prepareStatement(updateStock);
-                    preparedStatement.setString(1, card_product_name.getText());
-                    preparedStatement.setString(2, type);
-                    preparedStatement.setInt(3, upStock);
-                    preparedStatement.setDouble(4, pr);
-                    preparedStatement.setString(5, check);
-                    preparedStatement.setString(6, prod_image);
-                    preparedStatement.setString(7, String.valueOf(sqlDate));
-                    preparedStatement.setString(8, productID);
-                    preparedStatement.executeUpdate();
-                    alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Information Message");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Successfully Added!");
-                    alert.showAndWait();
-
-
-                    menuController.menuGetTotal(); // Use the injected MenuController reference
-                }
-
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        if (quantity == 0) {
+            showAlert(Alert.AlertType.ERROR, "Error Message", "Please add quantity first.");
+            return;
         }
+
+        String checkStockSql = "SELECT stock FROM Product WHERE product_id = ?";
+        String updateStockSql = "UPDATE Product SET stock = ? WHERE product_id = ?";
+        String insertCustomerSql = "INSERT INTO Customer (customer_id, product_id, product_name, product_type, quantity, price, date, em_username) VALUES(?,?,?,?,?,?,?,?)";
+
+        try (Connection conn = Database.connectionDB()) {
+            conn.setAutoCommit(false); // Start transaction
+
+            // Check stock
+            try (PreparedStatement checkStockPst = conn.prepareStatement(checkStockSql)) {
+                checkStockPst.setString(1, productID);
+                try (ResultSet rs = checkStockPst.executeQuery()) {
+                    if (rs.next()) {
+                        int currentStock = rs.getInt("stock");
+                        if (currentStock < quantity) {
+                            showAlert(Alert.AlertType.ERROR, "Error Message", "Invalid. This product is out of stock.");
+                            return;
+                        }
+                    }
+                }
+            }
+
+            // Insert into Customer table
+            try (PreparedStatement insertPst = conn.prepareStatement(insertCustomerSql)) {
+                insertPst.setInt(1, UserDetail.getCustomerID());
+                insertPst.setString(2, productID);
+                insertPst.setString(3, card_product_name.getText());
+                insertPst.setString(4, type);
+                insertPst.setInt(5, quantity);
+                insertPst.setDouble(6, quantity * pr);
+                insertPst.setDate(7, new java.sql.Date(new Date().getTime()));
+                insertPst.setString(8, UserDetail.getUsername());
+                insertPst.executeUpdate();
+            }
+
+            // Update stock
+            try (PreparedStatement updatePst = conn.prepareStatement(updateStockSql)) {
+                updatePst.setInt(1, productData.getStock() - quantity);
+                updatePst.setString(2, productID);
+                updatePst.executeUpdate();
+            }
+
+            conn.commit(); // Commit transaction
+            showAlert(Alert.AlertType.INFORMATION, "Information Message", "Successfully Added!");
+            menuController.menuShowData(); // Use the injected controller to refresh the view
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error Message", "An error occurred. Transaction rolled back.");
+        }
+    }
+
+    // Show alert
+    private void showAlert(Alert.AlertType type, String title, String message) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         card_spinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100, 0));
+        card_add_btn.setOnAction(event -> addBtn());
     }
 }

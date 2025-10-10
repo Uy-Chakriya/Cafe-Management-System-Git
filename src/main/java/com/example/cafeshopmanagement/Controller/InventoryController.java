@@ -1,4 +1,5 @@
 package com.example.cafeshopmanagement.Controller;
+
 import com.example.cafeshopmanagement.Database.Database;
 import com.example.cafeshopmanagement.Model.ProductData;
 import com.example.cafeshopmanagement.Model.UserDetail;
@@ -18,6 +19,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -69,48 +71,33 @@ public class InventoryController implements Initializable {
     public AnchorPane main_form;
 
     private Alert alert;
-    private Image image;
-    private String[] list = {
-            "Meal",
-            "Drinks",
-    };
-    ObservableList<String> typeList = FXCollections.observableArrayList(list);
-
-    private String[] status = {
-            "Available",
-            "Unavailable"
-    };
-
-    private Connection connection;
-    private PreparedStatement preparedStatement;
-    private ResultSet resultSet;
+    private String[] typeListItems = {"Meal", "Drinks"};
+    private String[] statusListItems = {"Available", "Unavailable"};
     private ObservableList<ProductData> inventoryListData;
-    private LoginController loginController = new LoginController();
+    private String selectedImagePath;
 
     public ObservableList<ProductData> inventoryDataList() {
         ObservableList<ProductData> listData = FXCollections.observableArrayList();
         String sql = "SELECT * FROM Product";
-        connection = Database.connectionDB();
-        try {
-            preparedStatement = connection.prepareStatement(sql);
-            resultSet = preparedStatement.executeQuery();
-            ProductData productData;
-            while (resultSet.next()) {
-                productData = new ProductData(
-                        resultSet.getInt("id"),
-                        resultSet.getString("product_id"),
-                        resultSet.getString("product_name"),
-                        resultSet.getString("type"),
-                        resultSet.getInt("stock"),
-                        resultSet.getDouble("price"),
-                        resultSet.getString("status"),
-                        resultSet.getString("image"),
-                        resultSet.getString("date")
+        try (Connection conn = Database.connectionDB();
+             PreparedStatement pst = conn.prepareStatement(sql);
+             ResultSet rs = pst.executeQuery()) {
+            while (rs.next()) {
+                ProductData productData = new ProductData(
+                        rs.getInt("id"),
+                        rs.getString("product_id"),
+                        rs.getString("product_name"),
+                        rs.getString("type"),
+                        rs.getInt("stock"),
+                        rs.getDouble("price"),
+                        rs.getString("status"),
+                        rs.getString("image"),
+                        rs.getString("date")
                 );
                 listData.add(productData);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         return listData;
     }
@@ -127,164 +114,139 @@ public class InventoryController implements Initializable {
         inventory_tableview.setItems(inventoryListData);
     }
 
+    // Add
     public void inventoryAddBtn() {
-        if (product_id_textfield.getText().isEmpty()
-                || product_name_textfield.getText().isEmpty()
-                || stock_textfield.getText().isEmpty()
-                || price_textfield.getText().isEmpty()
-                || type_combobox.getSelectionModel().getSelectedItem() == null
-                || status_combobox.getSelectionModel().getSelectedItem() == null
-                || UserDetail.getPath() == null
+        if (product_id_textfield.getText().isEmpty() || product_name_textfield.getText().isEmpty() ||
+                stock_textfield.getText().isEmpty() || price_textfield.getText().isEmpty() ||
+                type_combobox.getSelectionModel().getSelectedItem() == null ||
+                status_combobox.getSelectionModel().getSelectedItem() == null ||
+                selectedImagePath == null || selectedImagePath.isEmpty() // Check against the instance variable
         ) {
-            loginController.fillAllFieldError();
+            showAlert(Alert.AlertType.ERROR, "Error Message", "Please fill all blank fields and select an image.");
         } else {
             String checkProductID = "SELECT product_id from Product WHERE product_id = ?";
-            connection = Database.connectionDB();
-            try {
-                preparedStatement = connection.prepareStatement(checkProductID);
-                preparedStatement.setString(1, product_id_textfield.getText());
-                resultSet = preparedStatement.executeQuery();
-                if (resultSet.next()) {
-                    alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error Message");
-                    alert.setHeaderText(null);
-                    alert.setContentText(product_id_textfield.getText() + "already exist");
+            String insertData = "INSERT INTO Product (product_id, product_name, type, stock, price, status, image, date) VALUES(?,?,?,?,?,?,?,?)";
+            try (Connection conn = Database.connectionDB()) {
+                PreparedStatement checkStmt = conn.prepareStatement(checkProductID);
+                checkStmt.setString(1, product_id_textfield.getText());
+                ResultSet rs = checkStmt.executeQuery();
+                if (rs.next()) {
+                    showAlert(Alert.AlertType.ERROR, "Error Message", product_id_textfield.getText() + " already exists.");
                 } else {
-                    String insertData = "INSERT INTO Product (product_id, product_name, type, stock, price, status, image, date) VALUES(?,?,?,?,?,?,?,?)";
-                    Date date = new Date();
-                    java.sql.Date _date = new java.sql.Date(date.getTime());
-                    String path = UserDetail.getPath();
-                    path = path.replace("\\", "\\\\");
-                    preparedStatement = connection.prepareStatement(insertData);
-                    preparedStatement.setString(1, product_id_textfield.getText());
-                    preparedStatement.setString(2, product_name_textfield.getText());
-                    preparedStatement.setString(3, type_combobox.getSelectionModel().getSelectedItem());
-                    preparedStatement.setString(4, stock_textfield.getText());
-                    preparedStatement.setString(5, price_textfield.getText());
-                    preparedStatement.setString(6, status_combobox.getSelectionModel().getSelectedItem());
-                    preparedStatement.setString(7, path);
-                    preparedStatement.setString(8, String.valueOf(_date));
-                    preparedStatement.executeUpdate();
+                    PreparedStatement insertStmt = conn.prepareStatement(insertData);
+                    insertStmt.setString(1, product_id_textfield.getText());
+                    insertStmt.setString(2, product_name_textfield.getText());
+                    insertStmt.setString(3, type_combobox.getSelectionModel().getSelectedItem());
+                    insertStmt.setInt(4, Integer.parseInt(stock_textfield.getText()));
+                    insertStmt.setDouble(5, Double.parseDouble(price_textfield.getText()));
+                    insertStmt.setString(6, status_combobox.getSelectionModel().getSelectedItem());
+                    insertStmt.setString(7, selectedImagePath); // Use the instance variable
+                    insertStmt.setString(8, new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+                    insertStmt.executeUpdate();
+
                     inventoryShowData();
-                    getSuccessAlert("Successfully Added!");
+                    showAlert(Alert.AlertType.INFORMATION, "Success", "Successfully Added!");
                     inventoryClearBtn();
                 }
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
         }
     }
 
+    // Delete
     public void inventoryDeleteBtn() {
-        if (product_id_textfield.getText().isEmpty()
-                || product_name_textfield.getText().isEmpty()
-                || stock_textfield.getText().isEmpty()
-                || price_textfield.getText().isEmpty()
-                || type_combobox.getSelectionModel().getSelectedItem() == null
-                || status_combobox.getSelectionModel().getSelectedItem() == null
-                || UserDetail.getPath() == null
-                || UserDetail.getId() == 0
-        ) {
-            loginController.fillAllFieldError();
-        } else {
-            String deleteData = "DELETE FROM Product WHERE id = ?";
-            alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Alert");
-            alert.setHeaderText(null);
-            alert.setContentText("Are you sure you want to Delete product with ID: " + product_id_textfield.getText() + "?");
-            connection = Database.connectionDB();
-            Optional<ButtonType> optional = alert.showAndWait();
-            if (optional.get().equals(ButtonType.OK)) {
-                try {
-                    preparedStatement = connection.prepareStatement(deleteData);
-                    preparedStatement.setString(1, String.valueOf(UserDetail.getId()));
-                    preparedStatement.executeUpdate();
-                    getSuccessAlert("Successfully Deleted!");
-                    inventoryShowData();
-                    inventoryClearBtn();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            } else {
-                alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error Message");
-                alert.setHeaderText(null);
-                alert.setContentText("Cancelled");
-                alert.showAndWait();
+        if (UserDetail.getId() == 0) {
+            showAlert(Alert.AlertType.ERROR, "Error Message", "Please select an item to delete.");
+            return;
+        }
+        String deleteData = "DELETE FROM Product WHERE id = ?";
+        alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Alert");
+        alert.setHeaderText(null);
+        alert.setContentText("Are you sure you want to Delete product with ID: " + product_id_textfield.getText() + "?");
+        Optional<ButtonType> optional = alert.showAndWait();
+
+        if (optional.isPresent() && optional.get().equals(ButtonType.OK)) {
+            try (Connection conn = Database.connectionDB();
+                 PreparedStatement pst = conn.prepareStatement(deleteData)) {
+                pst.setInt(1, UserDetail.getId());
+                pst.executeUpdate();
+                showAlert(Alert.AlertType.INFORMATION, "Success", "Successfully Deleted!");
+                inventoryShowData();
+                inventoryClearBtn();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
+        } else {
+            showAlert(Alert.AlertType.INFORMATION, "Error Message", "Cancelled.");
         }
     }
 
+    // Update
     public void inventoryUpdateBtn() {
-        if (product_id_textfield.getText().isEmpty()
-                || product_name_textfield.getText().isEmpty()
-                || stock_textfield.getText().isEmpty()
-                || price_textfield.getText().isEmpty()
-                || type_combobox.getSelectionModel().getSelectedItem() == null
-                || status_combobox.getSelectionModel().getSelectedItem() == null
-                || UserDetail.getPath() == null
-                || UserDetail.getId() == 0
+        if (product_id_textfield.getText().isEmpty() || product_name_textfield.getText().isEmpty() ||
+                stock_textfield.getText().isEmpty() || price_textfield.getText().isEmpty() ||
+                type_combobox.getSelectionModel().getSelectedItem() == null ||
+                status_combobox.getSelectionModel().getSelectedItem() == null ||
+                selectedImagePath == null || UserDetail.getId() == 0
         ) {
-            loginController.fillAllFieldError();
+            showAlert(Alert.AlertType.ERROR, "Error Message", "Please select an item to update and fill all fields.");
         } else {
-            String path = UserDetail.getPath();
-            String updataData = "UPDATE Product SET product_id = ?, product_name=?, type=?, stock=?, price =?, status=?, image=?, date=? WHERE id= ?";
-            connection = Database.connectionDB();
-            Date date = new Date();
-            java.sql.Date _date = new java.sql.Date(date.getTime());
-            try {
-                preparedStatement = connection.prepareStatement(updataData);
-                preparedStatement.setString(1, product_id_textfield.getText());
-                preparedStatement.setString(2, product_name_textfield.getText());
-                preparedStatement.setString(3, type_combobox.getSelectionModel().getSelectedItem());
-                preparedStatement.setString(4, stock_textfield.getText());
-                preparedStatement.setString(5, price_textfield.getText());
-                preparedStatement.setString(6, status_combobox.getSelectionModel().getSelectedItem());
-                preparedStatement.setString(7, path);
-                preparedStatement.setString(8, String.valueOf(_date));
-                preparedStatement.setString(9, String.valueOf(UserDetail.getId()));
+            String updateData = "UPDATE Product SET product_id = ?, product_name=?, type=?, stock=?, price =?, status=?, image=?, date=? WHERE id= ?";
+            try (Connection conn = Database.connectionDB();
+                 PreparedStatement pst = conn.prepareStatement(updateData)) {
+                pst.setString(1, product_id_textfield.getText());
+                pst.setString(2, product_name_textfield.getText());
+                pst.setString(3, type_combobox.getSelectionModel().getSelectedItem());
+                pst.setInt(4, Integer.parseInt(stock_textfield.getText()));
+                pst.setDouble(5, Double.parseDouble(price_textfield.getText()));
+                pst.setString(6, status_combobox.getSelectionModel().getSelectedItem());
+                pst.setString(7, selectedImagePath); // Use the instance variable
+                pst.setString(8, new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+                pst.setInt(9, UserDetail.getId());
+
                 alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Alert");
                 alert.setHeaderText(null);
                 alert.setContentText("Are you sure you want to Update product with ID: " + product_id_textfield.getText());
                 Optional<ButtonType> optional = alert.showAndWait();
-                if (optional.get().equals(ButtonType.OK)) {
-                    preparedStatement.executeUpdate();
+                if (optional.isPresent() && optional.get().equals(ButtonType.OK)) {
+                    pst.executeUpdate();
                     inventoryShowData();
-                    getSuccessAlert("Successfully Updated!");
+                    showAlert(Alert.AlertType.INFORMATION, "Success", "Successfully Updated!");
                     inventoryClearBtn();
                 } else {
-                    alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error Message");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Cancelled");
-                    alert.showAndWait();
+                    showAlert(Alert.AlertType.ERROR, "Error Message", "Cancelled.");
                 }
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
         }
     }
 
+    // Import Button
     public void inventoryImportBtn() {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Open Image File", "*.png", "*.jpg"));
-        File file = fileChooser.showOpenDialog(main_form.getScene().getWindow());
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Open Image File", "*.png", "*.jpg"));
+
+        // Corrected line: Get the window from the button itself, which is in the scene.
+        File file = fileChooser.showOpenDialog(choose_image_button.getScene().getWindow());
+
         if (file != null) {
-            UserDetail.setPath(file.getAbsolutePath());
-            image = new Image(file.toURI().toString());
+            selectedImagePath = file.getAbsolutePath();
+            Image image = new Image(file.toURI().toString());
             display_selected_image.setImage(image);
         }
     }
 
+
+    // verify success
     public void getSuccessAlert(String message) {
-        alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Success");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
+        showAlert(Alert.AlertType.INFORMATION, "Success", message);
     }
 
+    // Clear
     public void inventoryClearBtn() {
         product_id_textfield.setText("");
         product_name_textfield.setText("");
@@ -292,15 +254,18 @@ public class InventoryController implements Initializable {
         stock_textfield.setText("");
         price_textfield.setText("");
         status_combobox.getSelectionModel().clearSelection();
-        UserDetail.setPath("");
+        selectedImagePath = null; // Clear the instance variable
         display_selected_image.setImage(null);
+        UserDetail.setPath("");
         UserDetail.setId(0);
     }
 
+
+    // Seleted Data in the inventory
     public void inventorySelectedData() {
         ProductData productData = inventory_tableview.getSelectionModel().getSelectedItem();
         int getIndex = inventory_tableview.getSelectionModel().getSelectedIndex();
-        if ((getIndex - 1) < -1) {
+        if (getIndex <= -1) {
             return;
         }
         product_id_textfield.setText(productData.getProductId());
@@ -309,18 +274,31 @@ public class InventoryController implements Initializable {
         stock_textfield.setText(String.valueOf(productData.getStock()));
         price_textfield.setText(String.valueOf(productData.getPrice()));
         status_combobox.setValue(productData.getStatus());
-        UserDetail.setPath("File:" + productData.getImage());
+        selectedImagePath = productData.getImage(); // Set the instance variable
         UserDetail.setDate(productData.getDate());
         UserDetail.setId(productData.getId());
-        display_selected_image.setImage(new Image(UserDetail.getPath()));
+        display_selected_image.setImage(new Image("file:" + productData.getImage().replace("\\", "/")));
+    }
+
+
+    private void showAlert(Alert.AlertType type, String title, String message) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ObservableList<String> observableStatus = FXCollections.observableArrayList(status);
-        type_combobox.setItems(typeList);
-        status_combobox.setItems(observableStatus);
+        type_combobox.setItems(FXCollections.observableArrayList(typeListItems));
+        status_combobox.setItems(FXCollections.observableArrayList(statusListItems));
         inventoryShowData();
-        //test
+        choose_image_button.setOnAction(event -> inventoryImportBtn());
+        add_button.setOnAction(event -> inventoryAddBtn());
+        update_button.setOnAction(event -> inventoryUpdateBtn());
+        delete_button.setOnAction(event -> inventoryDeleteBtn());
+        clear_button.setOnAction(event -> inventoryClearBtn());
+        inventory_tableview.setOnMouseClicked(event -> inventorySelectedData());
     }
 }

@@ -1,25 +1,48 @@
 .card {
     -fx-background-color: #ECDDD7;
-    -fx-background-radius: 8px;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0.5, 0, 2);
-}
-
-.card:hover {
-    -fx-cursor: hand;
-    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 15, 0.5, 0, 0);
+    -fx-background-radius: 5px;
 }
 
 .shadow {
-    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.5), 5, 0, 0, 0);
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 3, 0, 0, 2); /* Reduced shadow intensity */
 }
 
 .btn {
-    -fx-background-color: linear-gradient(to bottom right, #AA705B, #714024);
+    -fx-background-color: #714024; /* Solid dark brown button for 'Add' */
     -fx-text-fill: #ffffff;
-    -fx-background-radius: 8px;
+    -fx-font-size: 14px;
+    -fx-background-radius: 5px;
 }
 
 .btn:hover {
-    -fx-background-color: linear-gradient(to bottom right, #AA705B, #714024);
+    -fx-background-color: #AA705B; /* Slightly lighter on hover */
     -fx-cursor: hand;
+}
+
+/* Style for the quantity spinner control */
+.spinner {
+    -fx-background-color: transparent;
+    -fx-border-color: #714024;
+    -fx-border-width: 0.5px;
+    -fx-background-radius: 3px;
+}
+
+/* Style for the spinner text field (where the number is) */
+.spinner .text-field {
+    -fx-background-color: transparent;
+    -fx-text-fill: #714024;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+}
+
+/* Style for the spinner increment/decrement buttons */
+.spinner .increment-arrow-button, .spinner .decrement-arrow-button {
+    -fx-background-color: #ECDDD7;
+    -fx-border-color: #714024;
+    -fx-border-width: 0 0 0 0.5px;
+}
+
+.spinner .increment-arrow, .spinner .decrement-arrow {
+    -fx-background-color: #714024;
+    -fx-padding: 0.2em;
 }

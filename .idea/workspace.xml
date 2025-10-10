@@ -5,32 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5ddef2a2-bac1-4dcc-b873-5ed0ecde15d8" name="Changes" comment="before update the dashboard page">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/example/cafeshopmanagement/FXML/Login.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Controller/CardProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Controller/CardProductController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Controller/CustomersController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Controller/CustomersController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Controller/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Controller/DashboardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Controller/InventoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Controller/InventoryController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Controller/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Controller/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Controller/MenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Controller/MenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Database/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Database/Database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Model/CustomerModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Model/CustomerModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Model/UserDetail.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cafeshopmanagement/Model/UserDetail.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/cafeshopmanagement/FXML/CardProduct.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/cafeshopmanagement/FXML/CardProduct.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/cafeshopmanagement/FXML/Customers.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/cafeshopmanagement/FXML/Customers.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/cafeshopmanagement/FXML/Dashboard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/cafeshopmanagement/FXML/Dashboard.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/cafeshopmanagement/FXML/Inventory.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/cafeshopmanagement/FXML/Inventory.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/cafeshopmanagement/FXML/Login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/cafeshopmanagement/FXML/Login.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/cafeshopmanagement/FXML/Main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/cafeshopmanagement/FXML/Main.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/cafeshopmanagement/FXML/Menu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/cafeshopmanagement/FXML/Menu.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/cafeshopmanagement/FXML/Reciept.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/cafeshopmanagement/FXML/Reciept.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/cafeshopmanagement/Login.fxml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/cafeshopmanagement/Styles/CardProductStyle.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/cafeshopmanagement/Styles/CardProductStyle.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/cafeshopmanagement/Styles/Mainstyle.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/cafeshopmanagement/Styles/Mainstyle.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,41 +56,41 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.App.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "extract.method.default.visibility": "private",
-    "git-widget-placeholder": "latest-version",
-    "ignore.virus.scanning.warn.message": "true",
-    "junie.onboarding.icon.badge.shown": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/JavaFx Project/Secound/it's-work",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "SQL Dialects",
-    "to.speed.mode.migration.done": "true",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.App.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;extract.method.default.visibility&quot;: &quot;private&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;latest-version&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/JavaFx Project/Secound/it's-work&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;SQL Dialects&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "postgresql",
-      "sqlite"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;,
+      &quot;sqlite&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\JavaFx Project\Main seperate\Cafe-Management-System-Git\src\main\resources\com\example\cafeshopmanagement\FXML" />
@@ -202,7 +181,8 @@
       <workItem from="1760012061039" duration="1839000" />
       <workItem from="1760071012103" duration="6375000" />
       <workItem from="1760083110086" duration="186000" />
-      <workItem from="1760084318213" duration="345000" />
+      <workItem from="1760084318213" duration="5728000" />
+      <workItem from="1760096738062" duration="3993000" />
     </task>
     <servers />
   </component>

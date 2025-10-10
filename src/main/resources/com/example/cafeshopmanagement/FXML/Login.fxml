@@ -1,23 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Hyperlink?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.text.Font?>
-<?import java.lang.String?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.geometry.Insets?>
-<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cafeshopmanagement.Controller.LoginController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cafeshopmanagement.Controller.LoginController">
     <AnchorPane prefHeight="600.0" prefWidth="1000.0">
         <AnchorPane fx:id="side_form" layoutX="500.0" prefHeight="600.0" prefWidth="500.0" styleClass="gradient" stylesheets="@../Styles/LoginStyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <Button fx:id="side_already_have_an_account" layoutX="162.0" layoutY="501.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="175.0" styleClass="createAccountButton" text="Already have an account?" visible="false" />

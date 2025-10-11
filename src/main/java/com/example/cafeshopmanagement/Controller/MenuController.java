@@ -98,7 +98,8 @@ public class MenuController implements Initializable {
                     row += 1;
                 }
                 menu_grid_pane.add(anchorPane, column++, row);
-                GridPane.setMargin(anchorPane, new Insets(10));
+                // INCREASED margin from 10 to 15 for more space around cards
+                GridPane.setMargin(anchorPane, new Insets(15));
             } catch (IOException e) {
                 e.printStackTrace();
             }

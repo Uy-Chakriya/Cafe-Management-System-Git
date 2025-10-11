@@ -119,3 +119,9 @@
     -fx-background-color: linear-gradient(to bottom right, #AA705B, #714024);
     -fx-cursor: hand;
 }
+
+/* NEW: Style for the customer bar chart */
+.customer-chart .chart-bar {
+    -fx-bar-fill: #8B4513; /* SaddleBrown */
+    -fx-stroke: transparent;
+}

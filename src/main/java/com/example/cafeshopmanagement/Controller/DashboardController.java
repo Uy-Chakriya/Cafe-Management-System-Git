@@ -1,8 +1,9 @@
 package com.example.cafeshopmanagement.Controller;
 import com.example.cafeshopmanagement.Database.Database;
+import com.example.cafeshopmanagement.Model.UserDetail; // Import UserDetail
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.AreaChart;
+// Removed AreaChart import
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
@@ -23,21 +24,33 @@ public class DashboardController implements Initializable {
     public Label total_income_label;
     @FXML
     public Label sold_product_label;
-    @FXML
-    public AreaChart<String, Double> income_chart;
+    // Removed income_chart FXML field (AreaChart)
     @FXML
     public BarChart<String, Integer> customer_chart;
+    @FXML
+    public Label welcome_header;
     private Connection connection;
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;
 
+    public void setWelcomeMessage() {
+        String user = UserDetail.getUsername();
+        if (user != null && !user.isEmpty()) {
+            user = user.substring(0, 1).toUpperCase() + user.substring(1);
+        } else {
+            user = "Guest";
+        }
+        welcome_header.setText("Welcome, " + user + "!");
+    }
+
     // refresh Data
     public void refreshData() {
+        setWelcomeMessage();
         showNumberOfCustomers();
         showTodayIncome();
         showTotalIncome();
         showSoldProducts();
-        showIncomeChart();
+        // Removed showIncomeChart() call
         showCustomerChart();
     }
 
@@ -99,24 +112,6 @@ public class DashboardController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    // Income chart
-    private void showIncomeChart() {
-        income_chart.getData().clear();
-        String sql = "SELECT date, SUM(total) FROM Receipt GROUP BY date ORDER BY date ASC";
-        XYChart.Series<String, Double> series = new XYChart.Series<>();
-        series.setName("Daily Income");
-        try (Connection conn = Database.connectionDB();
-             PreparedStatement pst = conn.prepareStatement(sql);
-             ResultSet rs = pst.executeQuery()) {
-            while (rs.next()) {
-                series.getData().add(new XYChart.Data<>(rs.getString(1), rs.getDouble(2)));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        income_chart.getData().add(series);
     }
 
     // Show customer chart

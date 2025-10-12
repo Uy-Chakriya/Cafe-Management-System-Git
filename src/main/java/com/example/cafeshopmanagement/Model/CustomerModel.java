@@ -1,5 +1,4 @@
 package com.example.cafeshopmanagement.Model;
-
 public class CustomerModel {
     private Integer id;
     private String customer_id; // Corrected to String to match database schema

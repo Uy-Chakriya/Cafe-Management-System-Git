@@ -48,6 +48,9 @@ public class MenuController implements Initializable {
     private double totalPrice = 0.0;
     private double change = 0.0;
     private double amount = 0.0;
+    // Keep track of the last successfully paid customer ID for the receipt button
+    private int lastPaidCustomerID = 0;
+
 
     // refresh the menu
     public void refreshMenu() {
@@ -81,6 +84,7 @@ public class MenuController implements Initializable {
         return listData;
     }
 
+    // Display Card
     public void menuDisplayCard() {
         cardListData.clear();
         cardListData.addAll(menuGetData());
@@ -106,6 +110,7 @@ public class MenuController implements Initializable {
         }
     }
 
+    // Show data
     public void menuShowData() {
         ObservableList<CustomerModel> menuListData = menuDisplayOrder();
         menu_product_name.setCellValueFactory(new PropertyValueFactory<>("product_name"));
@@ -115,6 +120,7 @@ public class MenuController implements Initializable {
         menuGetTotal();
     }
 
+    // Get total
     public void menuGetTotal() {
         String total = "SELECT SUM(price) FROM Customer WHERE em_username = ?";
         try (Connection conn = Database.connectionDB();
@@ -130,6 +136,7 @@ public class MenuController implements Initializable {
         menu_total.setText("$" + String.format("%.2f", totalPrice));
     }
 
+    //
     public void menuAmount() {
         if (menu_amount_textfield.getText().isEmpty() || totalPrice == 0.0) {
             showAlert(Alert.AlertType.ERROR, "Error Message", "Invalid: Please enter an amount.");
@@ -150,6 +157,7 @@ public class MenuController implements Initializable {
         }
     }
 
+    // Menu pay button
     public void menuPayBtn() {
         // This method now runs to ensure amount is updated.
         if (menu_amount_textfield.getText().isEmpty()) {
@@ -204,8 +212,12 @@ public class MenuController implements Initializable {
 
                     conn.commit(); // Commit transaction
 
-                    showAlert(Alert.AlertType.INFORMATION, "Information Message", "Successful.");
-                    menuReceiptBtn();
+                    // Store the ID of the completed transaction
+                    lastPaidCustomerID = UserDetail.getCustomerID();
+
+                    showAlert(Alert.AlertType.INFORMATION, "Information Message", "Successful. Click 'Receipt' to view.");
+
+                    // REMOVED: menuReceiptBtn() call is removed here
                     menuRestart();
                     menuShowData();
 
@@ -295,12 +307,34 @@ public class MenuController implements Initializable {
     }
 
     public void menuReceiptBtn() {
-        if (totalPrice > 0) {
+        // If the user has an active order (totalPrice > 0), show that pending order.
+        // If the current order is empty, try to show the last completed order.
+        int idToDisplay = totalPrice > 0 ? this.customerID : this.lastPaidCustomerID;
+        double totalToDisplay = totalPrice > 0 ? this.totalPrice : 0.0; // Use current total if active order
+
+        if (idToDisplay > 0) {
+            // If the current order is empty, retrieve the total from the Receipt table for the last completed order.
+            if (totalPrice == 0.0 && idToDisplay == lastPaidCustomerID) {
+                String sql = "SELECT total FROM Receipt WHERE customer_id = ?";
+                try (Connection conn = Database.connectionDB();
+                     PreparedStatement pst = conn.prepareStatement(sql)) {
+                    pst.setString(1, String.valueOf(idToDisplay));
+                    ResultSet rs = pst.executeQuery();
+                    if (rs.next()) {
+                        totalToDisplay = rs.getDouble(1);
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("FXML/Receipt.fxml"));
+                // FIX: Corrected FXML file name from "Receipt.fxml" to "Reciept.fxml"
+                FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("FXML/Reciept.fxml"));
                 Parent root = fxmlLoader.load();
                 ReceiptController receiptController = fxmlLoader.getController();
-                receiptController.setReceiptData(customerID, totalPrice);
+                receiptController.setReceiptData(idToDisplay, totalToDisplay);
 
                 Stage stage = new Stage();
                 Scene scene = new Scene(root);
@@ -311,7 +345,7 @@ public class MenuController implements Initializable {
                 e.printStackTrace();
             }
         } else {
-            showAlert(Alert.AlertType.ERROR, "Error Message", "Cannot generate receipt without an order.");
+            showAlert(Alert.AlertType.ERROR, "Error Message", "No active or recent order to generate a receipt for.");
         }
     }
 

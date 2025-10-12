@@ -240,7 +240,6 @@ public class InventoryController implements Initializable {
         }
     }
 
-
     // verify success
     public void getSuccessAlert(String message) {
         showAlert(Alert.AlertType.INFORMATION, "Success", message);
@@ -259,7 +258,6 @@ public class InventoryController implements Initializable {
         UserDetail.setPath("");
         UserDetail.setId(0);
     }
-
 
     // Seleted Data in the inventory
     public void inventorySelectedData() {
@@ -280,7 +278,7 @@ public class InventoryController implements Initializable {
         display_selected_image.setImage(new Image("file:" + productData.getImage().replace("\\", "/")));
     }
 
-
+    //alert
     private void showAlert(Alert.AlertType type, String title, String message) {
         Alert alert = new Alert(type);
         alert.setTitle(title);

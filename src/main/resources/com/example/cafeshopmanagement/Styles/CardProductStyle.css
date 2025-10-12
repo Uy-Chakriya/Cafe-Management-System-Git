@@ -8,7 +8,7 @@
 }
 
 .btn {
-    -fx-background-color: #714024; /* Solid dark brown button for 'Add' */
+    -fx-background-color: #714024;
     -fx-text-fill: #ffffff;
     -fx-font-size: 14px;
     -fx-background-radius: 5px;

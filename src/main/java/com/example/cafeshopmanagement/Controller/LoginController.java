@@ -62,18 +62,16 @@ public class LoginController implements Initializable {
         } else {
             String checkUsernameAndQuestion = "SELECT username, question, answer FROM Employee WHERE username = ? AND question = ? AND answer = ?";
             try (Connection conn = Database.connectionDB();
-                 PreparedStatement pst = conn.prepareStatement(checkUsernameAndQuestion)) {
-                pst.setString(1, user_username.getText());
-                pst.setString(2, user_question.getSelectionModel().getSelectedItem());
-                pst.setString(3, user_answer.getText());
-                try (ResultSet rs = pst.executeQuery()) {
+                 PreparedStatement checkStockPst = conn.prepareStatement(checkUsernameAndQuestion)) { // Use checkStockPst name for consistency
+                checkStockPst.setString(1, user_username.getText());
+                checkStockPst.setString(2, user_question.getSelectionModel().getSelectedItem());
+                checkStockPst.setString(3, user_answer.getText());
+                try (ResultSet rs = checkStockPst.executeQuery()) {
                     if (rs.next()) {
                         // Switch to Change Password form on success
                         forget_password_section.setVisible(true);
                         forget_password_proceed_section.setVisible(false);
 
-                        // Keep these visibility calls to manage the state of the switch buttons,
-                        // as they might not be part of the individual form sections.
                         if (side_already_have_an_account != null) side_already_have_an_account.setVisible(false);
                         if (side_create_account_button != null) side_create_account_button.setVisible(false);
                     } else {
@@ -82,10 +80,12 @@ public class LoginController implements Initializable {
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
+                showAlert(Alert.AlertType.ERROR, "Database Error", "An error occurred while checking user credentials.");
             }
         }
     }
 
+    // Login
     public void loginAction() {
         if (login_username.getText().isEmpty() || login_password.getText().isEmpty()) {
             showAlert(Alert.AlertType.ERROR, "Error Message", "Please fill all blank fields");
@@ -120,12 +120,13 @@ public class LoginController implements Initializable {
                 }
             } catch (SQLException | IOException e) {
                 e.printStackTrace();
+                showAlert(Alert.AlertType.ERROR, "System Error", "An error occurred during login or loading the main application.");
             }
         }
     }
 
     // Register
-    public void registrationButton() throws SQLException {
+    public void registrationButton() { // Removed throws SQLException as it's now handled internally
         if (register_account_username.getText().isEmpty() || register_account_password.getText().isEmpty()
                 || register_account_question.getSelectionModel().getSelectedItem() == null || register_account_answer.getText().isEmpty()) {
             showAlert(Alert.AlertType.ERROR, "Error Message", "Please fill all blank fields");
@@ -134,6 +135,8 @@ public class LoginController implements Initializable {
             String regData = "INSERT INTO Employee (username, password, question, answer, date) VALUES (?, ?, ?, ?, ?)";
 
             try (Connection conn = Database.connectionDB()) {
+
+                // 1. Check Username existence
                 try (PreparedStatement checkPst = conn.prepareStatement(checkUsername)) {
                     checkPst.setString(1, register_account_username.getText());
                     try (ResultSet rs = checkPst.executeQuery()) {
@@ -144,11 +147,14 @@ public class LoginController implements Initializable {
                         }
                     }
                 }
+
+                // 2. Check Password Length
                 if (register_account_password.getText().length() < 8) {
                     showAlert(Alert.AlertType.ERROR, "Error Message", "Password must be more than 8 characters.");
                     return;
                 }
 
+                // 3. Insert new employee record
                 try (PreparedStatement regPst = conn.prepareStatement(regData)) {
                     regPst.setString(1, register_account_username.getText());
                     regPst.setString(2, register_account_password.getText());
@@ -169,18 +175,21 @@ public class LoginController implements Initializable {
 
             } catch (SQLException e) {
                 e.printStackTrace();
+                showAlert(Alert.AlertType.ERROR, "Database Error", "An error occurred during registration.");
             }
         }
     }
 
+    // alert
     private void showAlert(Alert.AlertType type, String title, String message) {
-        alert = new Alert(type);
+        Alert alert = new Alert(type);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
     }
 
+    // switch form
     public void switchForm(ActionEvent event) {
         if (event.getSource() == side_create_account_button) {
             transitionRight(); // Switch to Register form
@@ -189,23 +198,16 @@ public class LoginController implements Initializable {
         }
     }
 
-    /**
-     * Replaces the old animation logic. Switches view back to the Login form.
-     */
     public void transitionLeft() {
         login_section.setVisible(true);
         register_account_section.setVisible(false);
         forget_password_section.setVisible(false);
         forget_password_proceed_section.setVisible(false);
 
-        // Update visibility of switch buttons for the Login state
         if (side_already_have_an_account != null) side_already_have_an_account.setVisible(false);
         if (side_create_account_button != null) side_create_account_button.setVisible(true);
     }
 
-    /**
-     * Replaces the old animation logic. Switches view to the Register form.
-     */
     public void transitionRight() {
         login_section.setVisible(false);
         register_account_section.setVisible(true);
@@ -217,6 +219,7 @@ public class LoginController implements Initializable {
         if (side_create_account_button != null) side_create_account_button.setVisible(false);
     }
 
+    // forgot password action
     public void forgetPasswordAction() {
         login_section.setVisible(false);
         register_account_section.setVisible(false);
@@ -271,6 +274,7 @@ public class LoginController implements Initializable {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Database Error", "An error occurred while changing the password.");
         }
     }
 
@@ -278,13 +282,7 @@ public class LoginController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         register_account_question.setItems(observableList);
         user_question.setItems(observableList);
-        create_account_button.setOnAction(event -> {
-            try {
-                registrationButton();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        });
+        create_account_button.setOnAction(event -> registrationButton()); // Removed lambda wrapping try-catch
         login_button.setOnAction(event -> loginAction());
         login_forget_password.setOnAction(event -> forgetPasswordAction());
         back_to_login.setOnAction(event -> backToLogin());

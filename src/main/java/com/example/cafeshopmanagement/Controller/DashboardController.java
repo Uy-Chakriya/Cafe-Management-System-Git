@@ -3,7 +3,6 @@ import com.example.cafeshopmanagement.Database.Database;
 import com.example.cafeshopmanagement.Model.UserDetail; // Import UserDetail
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-// Removed AreaChart import
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;

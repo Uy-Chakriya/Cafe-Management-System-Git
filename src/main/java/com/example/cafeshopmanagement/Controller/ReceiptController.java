@@ -28,16 +28,18 @@ public class ReceiptController implements Initializable {
     private ResultSet resultSet;
     public void setReceiptData(int customerID, double total) {
         receipt_customer_id.setText(String.valueOf(customerID));
-        receipt_total.setText(String.valueOf(total));
+        receipt_total.setText(String.format("%.2f", total)); // Format total as currency
         showReceiptTable(customerID);
     }
     private void showReceiptTable(int customerID) {
         ObservableList<CustomerModel> receiptList = FXCollections.observableArrayList();
-        String sql = "SELECT c.product_name, p.type, c.quantity, c.price FROM Customer c JOIN Product p ON c.product_id = p.product_id WHERE c.customer_id = ?";
+        // Query the permanent ReceiptItem table
+        String sql = "SELECT product_name, product_type, quantity, price FROM ReceiptItem WHERE receipt_id = ?";
         connection = Database.connectionDB();
         try {
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, customerID);
+            // Use setString for the TEXT column in the database
+            preparedStatement.setString(1, String.valueOf(customerID));
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -46,7 +48,7 @@ public class ReceiptController implements Initializable {
                         null,
                         null,
                         resultSet.getString("product_name"),
-                        resultSet.getString("type"),
+                        resultSet.getString("product_type"),
                         resultSet.getInt("quantity"),
                         resultSet.getDouble("price"),
                         null,
@@ -63,6 +65,15 @@ public class ReceiptController implements Initializable {
 
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            // Closing resources
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 

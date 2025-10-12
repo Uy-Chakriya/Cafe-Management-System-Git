@@ -1,15 +1,31 @@
-.gradient {
-    -fx-background-color: linear-gradient(to bottom right, #AA705B, #714024);
+/* Custom Colors based on the image: */
+/* Left side: Pale Tan/Pink: #EFE8E4 */
+/* Right side: Pale Purple: #E8EAF6 */
+/* Accent Brown (Medium): #9E7465 (Used for login button and borders) */
+/* Darker Accent (Dark Brown): #714024 (Used for text and hover/focus states) */
+
+.image-side-form {
+    -fx-background-color: #EFE8E4; /* Pale tan/pink for the left side */
 }
 
-.white-form {
-    -fx-background-color: #ECDDD7;
+.form-background {
+    -fx-background-color: #E8EAF6; /* Pale purple for the right side */
 }
 
-.gradient Label {
-    -fx-text-fill: #ECDDD7;
+.cafe-street-logo-text {
+    -fx-text-fill: #714024; /* Darker brown for the logo text */
 }
 
+.welcome-header {
+    -fx-text-fill: #714024; /* Darker brown for headers */
+}
+
+/* Base style for labels in the form section (right side) */
+.form-background Label {
+    -fx-text-fill: #714024;
+}
+
+/* Original header-label (used by Register form's header) */
 .header-label {
     -fx-border-color: #714024;
     -fx-border-width: 0 0 0 5px;
@@ -17,38 +33,65 @@
     -fx-text-fill: #714024;
 }
 
+/* Login/Proceed/Change Password Button */
 .login-btn {
-    -fx-background-color: linear-gradient(to bottom right, #AA705B, #714024);
+    -fx-background-color: #9E7465; /* Solid medium brown */
     -fx-text-fill: #ffffff;
-    -fx-font-size: 16;
+    -fx-font-size: 16px;
     -fx-background-radius: 5px;
     -fx-cursor: hand;
 }
 
 .login-btn:hover {
-    -fx-background-color: linear-gradient(to bottom right, #AA705B, #714024);
+    -fx-background-color: #AA705B; /* Slightly lighter on hover */
 }
 
+/* Textfield - Adjusted to match the clean white and brown border look */
 .textfield {
-    -fx-background-color: transparent;
-    -fx-border-color: linear-gradient(to bottom right, #AA705B, #714024);
-    -fx-border-width: 0.3px;
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #9E7465; /* Medium brown border */
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
 }
 
 .textfield:focused {
-    -fx-border-width: 1px;
-    -fx-border-color: #714024;
+    -fx-border-width: 2px;
+    -fx-border-color: #714024; /* Darker brown on focus */
 }
 
+/* Create Account/Back to Login Button (The 'secondary' switch buttons) */
 .createAccountButton {
     -fx-background-color: transparent;
     -fx-cursor: hand;
-    -fx-text-fill: #ffffff;
-    -fx-border-color: #ffffff;
+    -fx-text-fill: #9E7465; /* Text color matches medium brown */
+    -fx-border-color: #9E7465;
     -fx-border-width: 1px;
+    -fx-background-radius: 5px;
 }
 
 .createAccountButton:hover {
-    -fx-background-color: #ffffff;
-    -fx-text-fill: #000;
+    -fx-background-color: #9E7465;
+    -fx-text-fill: #ffffff;
+}
+
+/* Hyperlink style for Forgot Password - Removed underline to match design */
+.hyperlink-no-underline {
+    -fx-text-fill: #9E7465;
+    -fx-border-width: 0;
+    -fx-underline: false;
+}
+
+.hyperlink-no-underline:hover {
+    -fx-underline: true;
+    -fx-cursor: hand;
+}
+
+/* Placeholder for the coffee illustration on the left side - Can be removed when an actual image is used */
+.coffee-illustration-placeholder {
+    -fx-background-color: transparent;
+}
+
+/* Keeping old styles just in case they are referenced, though they won't be used by the new FXML */
+.gradient {
+    -fx-background-color: linear-gradient(to bottom right, #AA705B, #714024);
 }

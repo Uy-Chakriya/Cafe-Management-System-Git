@@ -2,7 +2,6 @@ package com.example.cafeshopmanagement.Controller;
 import com.example.cafeshopmanagement.App;
 import com.example.cafeshopmanagement.Database.Database;
 import com.example.cafeshopmanagement.Model.UserDetail;
-import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,7 +11,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -70,10 +68,14 @@ public class LoginController implements Initializable {
                 pst.setString(3, user_answer.getText());
                 try (ResultSet rs = pst.executeQuery()) {
                     if (rs.next()) {
-                        side_already_have_an_account.setVisible(false);
-                        side_create_account_button.setVisible(false);
+                        // Switch to Change Password form on success
                         forget_password_section.setVisible(true);
                         forget_password_proceed_section.setVisible(false);
+
+                        // Keep these visibility calls to manage the state of the switch buttons,
+                        // as they might not be part of the individual form sections.
+                        if (side_already_have_an_account != null) side_already_have_an_account.setVisible(false);
+                        if (side_create_account_button != null) side_create_account_button.setVisible(false);
                     } else {
                         showAlert(Alert.AlertType.ERROR, "Error Message", "Incorrect Username, Question or Answer");
                     }
@@ -122,7 +124,7 @@ public class LoginController implements Initializable {
         }
     }
 
-    // Registe
+    // Register
     public void registrationButton() throws SQLException {
         if (register_account_username.getText().isEmpty() || register_account_password.getText().isEmpty()
                 || register_account_question.getSelectionModel().getSelectedItem() == null || register_account_answer.getText().isEmpty()) {
@@ -161,6 +163,7 @@ public class LoginController implements Initializable {
                     register_account_answer.setText("");
                     register_account_password.setText("");
                     register_account_question.getSelectionModel().clearSelection();
+                    // Calls transitionLeft to switch back to the login form.
                     transitionLeft();
                 }
 
@@ -178,55 +181,62 @@ public class LoginController implements Initializable {
         alert.showAndWait();
     }
 
-    TranslateTransition translateTransition = new TranslateTransition();
-
     public void switchForm(ActionEvent event) {
         if (event.getSource() == side_create_account_button) {
-            transitionRight();
+            transitionRight(); // Switch to Register form
         } else if (event.getSource() == side_already_have_an_account) {
-            transitionLeft();
+            transitionLeft(); // Switch to Login form
         }
     }
 
+    /**
+     * Replaces the old animation logic. Switches view back to the Login form.
+     */
     public void transitionLeft() {
-        translateTransition.setNode(side_form);
-        translateTransition.setToX(0);
-        translateTransition.setDuration(Duration.millis(1000));
-        translateTransition.play();
-        translateTransition.setOnFinished(e -> {
-            side_already_have_an_account.setVisible(false);
-            side_create_account_button.setVisible(true);
-            forget_password_section.setVisible(false);
-            forget_password_proceed_section.setVisible(false);
-        });
+        login_section.setVisible(true);
+        register_account_section.setVisible(false);
+        forget_password_section.setVisible(false);
+        forget_password_proceed_section.setVisible(false);
+
+        // Update visibility of switch buttons for the Login state
+        if (side_already_have_an_account != null) side_already_have_an_account.setVisible(false);
+        if (side_create_account_button != null) side_create_account_button.setVisible(true);
     }
 
+    /**
+     * Replaces the old animation logic. Switches view to the Register form.
+     */
     public void transitionRight() {
-        translateTransition.setNode(side_form);
-        translateTransition.setToX(300);
-        translateTransition.setDuration(Duration.millis(1000));
-        translateTransition.play();
-        translateTransition.setOnFinished(e -> {
-            side_already_have_an_account.setVisible(true);
-            side_create_account_button.setVisible(false);
-            forget_password_section.setVisible(false);
-            forget_password_proceed_section.setVisible(false);
-        });
+        login_section.setVisible(false);
+        register_account_section.setVisible(true);
+        forget_password_section.setVisible(false);
+        forget_password_proceed_section.setVisible(false);
+
+        // Update visibility of switch buttons for the Register state
+        if (side_already_have_an_account != null) side_already_have_an_account.setVisible(true);
+        if (side_create_account_button != null) side_create_account_button.setVisible(false);
     }
 
     public void forgetPasswordAction() {
-        side_already_have_an_account.setVisible(false);
-        side_create_account_button.setVisible(false);
+        login_section.setVisible(false);
+        register_account_section.setVisible(false);
         forget_password_section.setVisible(false);
         forget_password_proceed_section.setVisible(true);
-        side_create_account_button.setVisible(true);
+
+        // Hide all switch buttons when in the forget password flow
+        if (side_already_have_an_account != null) side_already_have_an_account.setVisible(false);
+        if (side_create_account_button != null) side_create_account_button.setVisible(false);
     }
 
     public void backToLogin() {
-        side_already_have_an_account.setVisible(false);
-        side_create_account_button.setVisible(true);
+        login_section.setVisible(true);
+        register_account_section.setVisible(false);
         forget_password_section.setVisible(false);
         forget_password_proceed_section.setVisible(false);
+
+        // Restore switch buttons to the Login state
+        if (side_already_have_an_account != null) side_already_have_an_account.setVisible(false);
+        if (side_create_account_button != null) side_create_account_button.setVisible(true);
     }
 
     public void changePasswordAction() {
@@ -255,6 +265,7 @@ public class LoginController implements Initializable {
                 user_username.setText("");
                 user_answer.setText("");
                 user_question.getSelectionModel().clearSelection();
+                backToLogin(); // Go back to login screen
             } else {
                 showAlert(Alert.AlertType.ERROR, "Error Message", "Failed to change password. User might not exist.");
             }
@@ -280,5 +291,11 @@ public class LoginController implements Initializable {
         back_to.setOnAction(event -> backToLogin());
         user_proceed.setOnAction(event -> proceedAction());
         change_password.setOnAction(event -> changePasswordAction());
+
+        // Initial setup for form visibility
+        login_section.setVisible(true);
+        register_account_section.setVisible(false);
+        forget_password_section.setVisible(false);
+        forget_password_proceed_section.setVisible(false);
     }
 }
